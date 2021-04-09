@@ -195,10 +195,10 @@ Citizen.CreateThread(function()
     end
 end)
 
-QBCore.Commands.Add("sneeuwbal", "Picking up snowball", {}, false, function(source, args)
+QBCore.Commands.Add("snowball", "Picking up snowball", {}, false, function(source, args)
     if CurrentWeather == "XMAS" then
         TriggerClientEvent("inventory:client:PickupSnowballs", source)
     else
-        TriggerClientEvent('QBCore:Notify', source, "Not the right time of the year :(", "error")
+        TriggerClientEvent('QBCore:Notify', source, "Only Available When Snowing", "error")
     end
 end)
