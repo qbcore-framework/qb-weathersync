@@ -29,7 +29,7 @@ RegisterNetEvent('qb-weathersync:client:EnableSync')
 AddEventHandler('qb-weathersync:client:EnableSync', function()
 	disable = false
     TriggerServerEvent('qb-weathersync:server:RequestStateSync')
-	SetRainFxIntensity(-1.0)
+	SetRainLevel(-1)
 end)
 
 RegisterNetEvent('qb-weathersync:client:DisableSync')
@@ -38,7 +38,7 @@ AddEventHandler('qb-weathersync:client:DisableSync', function()
 
 	Citizen.CreateThread(function() 
 		while disable do
-			SetRainFxIntensity(0.0)
+			SetRainLevel(-1)
 			SetWeatherTypePersist('EXTRASUNNY')
 			SetWeatherTypeNow('EXTRASUNNY')
 			SetWeatherTypeNowPersist('EXTRASUNNY')
