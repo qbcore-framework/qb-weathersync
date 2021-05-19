@@ -1,23 +1,19 @@
-fx_version 'cerulean'
+fx_version 'bodacious'
 game 'gta5'
 
-description 'QB-WeatherSync'
-version '1.0.0'
+description 'vSyncRevamped'
+version '1.0.2'
 
 server_scripts {
-	"server/main.lua",
-	"server/commands.lua"
-} 
+	'config.lua',
+	'locale.lua',
+	'locales/en.lua',
+	'server/server.lua'
+}
 
 client_scripts {
-	"client/main.lua"
-}
-
-server_exports {
-	'ToggleBlackout',
-	'FreezeElement'
-}
-
-dependencies {
-	'qb-core'
+	'config.lua',
+	'locale.lua',
+	'locales/en.lua',
+	'client/client.lua'
 }
