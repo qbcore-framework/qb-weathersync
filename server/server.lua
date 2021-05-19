@@ -14,6 +14,14 @@ AddEventHandler('qb-weathersync:server:RequestStateSync', function()
     TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
 end)
 
+RegisterServerEvent('qb-weathersync:server:RequestCommands')
+AddEventHandler('qb-weathersync:server:RequestCommands', function()
+    local src = source
+    if isAllowedToChange(src) then
+        TriggerClientEvent('qb-weathersync:client:RequestCommands', src, true)
+    end
+end)
+
 function isAllowedToChange(player)
     if QBCore.Functions.HasPermission(player, "admin") then
         return true
