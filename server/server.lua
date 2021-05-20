@@ -40,6 +40,28 @@ AddEventHandler('qb-weathersync:server:setWeather', function(weather)
     end
 end)
 
+RegisterServerEvent('qb-weathersync:server:setTime')
+AddEventHandler('qb-weathersync:server:setTime', function(hour, minute)
+    if hour ~= nil and minute ~= nil then
+        local argh = tonumber(hour)
+        local argm = tonumber(minute)
+        if argh < 24 then
+            ShiftToHour(argh)
+        else
+            ShiftToHour(0)
+        end
+        if argm < 60 then
+            ShiftToMinute(argm)
+        else
+            ShiftToMinute(0)
+        end
+        print(_U('time_change', argh, argm))
+        TriggerEvent('qb-weathersync:server:RequestStateSync')
+    else
+        print(_U('time_invalid'))
+    end
+end)
+
 function isAllowedToChange(player)
     if QBCore.Functions.HasPermission(player, "admin") then
         return true
