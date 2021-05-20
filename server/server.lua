@@ -26,13 +26,13 @@ RegisterServerEvent('qb-weathersync:server:setWeather')
 AddEventHandler('qb-weathersync:server:setWeather', function(weather)
     local validWeatherType = false
     for i,wtype in ipairs(Config.AvailableWeatherTypes) do
-        if wtype == string.upper(args[1]) then
+        if wtype == string.upper(weather) then
             validWeatherType = true
         end
     end
     if validWeatherType then
         print(_U('weather_updated'))
-        CurrentWeather = string.upper(args[1])
+        CurrentWeather = string.upper(weather)
         newWeatherTimer = 10
         TriggerEvent('qb-weathersync:server:RequestStateSync')
     else
