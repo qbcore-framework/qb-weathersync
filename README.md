@@ -1,3 +1,5 @@
+ITS KINDA FIXED
+
 # qb-weathersync
 Synced weather and time for QB-Core Framework :sunrise:
 

@@ -5,15 +5,13 @@ description 'vSyncRevamped'
 version '1.0.2'
 
 server_scripts {
-	'config.lua',
-	'locale.lua',
-	'locales/en.lua',
-	'server/server.lua'
+	'server/server.lua',
+	'server/commands.lua'
 }
 
-client_scripts {
-	'config.lua',
-	'locale.lua',
-	'locales/en.lua',
-	'client/client.lua'
+client_script 'client/client.lua'
+
+server_exports {
+	'ToggleBlackout',
+	'FreezeElement',
 }
