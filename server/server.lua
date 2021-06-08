@@ -14,6 +14,54 @@ AddEventHandler('qb-weathersync:server:RequestStateSync', function()
     TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
 end)
 
+RegisterServerEvent('qb-weathersync:server:RequestCommands')
+AddEventHandler('qb-weathersync:server:RequestCommands', function()
+    local src = source
+    if isAllowedToChange(src) then
+        TriggerClientEvent('qb-weathersync:client:RequestCommands', src, true)
+    end
+end)
+
+RegisterServerEvent('qb-weathersync:server:setWeather')
+AddEventHandler('qb-weathersync:server:setWeather', function(weather)
+    local validWeatherType = false
+    for i,wtype in ipairs(Config.AvailableWeatherTypes) do
+        if wtype == string.upper(weather) then
+            validWeatherType = true
+        end
+    end
+    if validWeatherType then
+        print(_U('weather_updated'))
+        CurrentWeather = string.upper(weather)
+        newWeatherTimer = Config.NewWeatherTimer
+        TriggerEvent('qb-weathersync:server:RequestStateSync')
+    else
+        print(_U('weather_invalid'))
+    end
+end)
+
+RegisterServerEvent('qb-weathersync:server:setTime')
+AddEventHandler('qb-weathersync:server:setTime', function(hour, minute)
+    if hour ~= nil and minute ~= nil then
+        local argh = tonumber(hour)
+        local argm = tonumber(minute)
+        if argh < 24 then
+            ShiftToHour(argh)
+        else
+            ShiftToHour(0)
+        end
+        if argm < 60 then
+            ShiftToMinute(argm)
+        else
+            ShiftToMinute(0)
+        end
+        print(_U('time_change', argh, argm))
+        TriggerEvent('qb-weathersync:server:RequestStateSync')
+    else
+        print(_U('time_invalid'))
+    end
+end)
+
 function isAllowedToChange(player)
     if QBCore.Functions.HasPermission(player, "admin") then
         return true
@@ -81,7 +129,7 @@ RegisterCommand('weather', function(source, args)
             if validWeatherType then
                 print(_U('weather_updated'))
                 CurrentWeather = string.upper(args[1])
-                newWeatherTimer = 10
+                newWeatherTimer = Config.NewWeatherTimer
                 TriggerEvent('qb-weathersync:server:RequestStateSync')
             else
                 print(_U('weather_invalid'))
@@ -101,7 +149,7 @@ RegisterCommand('weather', function(source, args)
                 if validWeatherType then
                     TriggerClientEvent('QBCore:Notify', source, _U('weather_willchangeto', string.lower(args[1])))
                     CurrentWeather = string.upper(args[1])
-                    newWeatherTimer = 10
+                    newWeatherTimer = Config.NewWeatherTimer
                     TriggerEvent('qb-weathersync:server:RequestStateSync')
                 else
                     TriggerClientEvent('QBCore:Notify', source, _U('weather_invalidc'), 'error')
@@ -277,12 +325,12 @@ end)
 Citizen.CreateThread(function()
     while true do
         newWeatherTimer = newWeatherTimer - 1
-        Citizen.Wait(60000)
+        Citizen.Wait((1000 * 60) * Config.NewWeatherTimer)
         if newWeatherTimer == 0 then
             if Config.DynamicWeather then
                 NextWeatherStage()
             end
-            newWeatherTimer = 10
+            newWeatherTimer = Config.NewWeatherTimer
         end
     end
 end)
