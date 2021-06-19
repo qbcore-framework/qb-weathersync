@@ -73,6 +73,13 @@ Citizen.CreateThread(function()
             SetForceVehicleTrails(false)
             SetForcePedFootstepsTracks(false)
         end
+        if lastWeather == 'RAIN' then
+            SetRainLevel(0.3)
+        elseif lastWeather == 'THUNDER' then
+            SetRainLevel(0.5)
+        else
+            SetRainLevel(0.0)
+        end
     end
 end)
 
