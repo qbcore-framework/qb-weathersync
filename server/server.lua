@@ -70,6 +70,12 @@ function isAllowedToChange(player)
     end
 end
 
+RegisterServerEvent('qb-weathersync:server:toggleBlackout')
+AddEventHandler('qb-weathersync:server:toggleBlackout', function()
+    blackout = not blackout
+    TriggerEvent('qb-weathersync:server:RequestStateSync')
+end)
+
 RegisterCommand('freezetime', function(source, args)
     if source ~= 0 then
         if isAllowedToChange(source) then
