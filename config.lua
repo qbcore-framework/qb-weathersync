@@ -8,6 +8,7 @@ Config.TimeOffset       = 0 -- Time offset                                      
 Config.FreezeTime       = false -- freeze time                                  default: false
 Config.Blackout         = false -- Set blackout                                 default: false
 Config.NewWeatherTimer  = 10 -- Time (in minutes) between each weather change   default: 10
+Config.Disabled         = false -- Set weather disabled                         default: false
 
 Config.Locale           = 'en' -- Languages : en, fr, pt, tr, pt_br
 
