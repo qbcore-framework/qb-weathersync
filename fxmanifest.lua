@@ -4,15 +4,18 @@ game 'gta5'
 description 'vSyncRevamped'
 version '1.0.2'
 
-server_scripts {
+shared_scripts { 
+	'@qb-core/import.lua',
 	'config.lua',
+}
+
+server_scripts {
 	'locale.lua',
 	'locales/en.lua',
 	'server/server.lua'
 }
 
 client_scripts {
-	'config.lua',
 	'locale.lua',
 	'locales/en.lua',
 	'client/client.lua'

@@ -7,15 +7,6 @@ local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
 local disable = Config.Disabled
 
-QBCore = nil
-
-Citizen.CreateThread(function() 
-    while QBCore == nil do
-        TriggerEvent("QBCore:GetObject", function(obj) QBCore = obj end)    
-        Citizen.Wait(200)
-    end
-end)
-
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     disable = false
