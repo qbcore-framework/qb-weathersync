@@ -7,25 +7,26 @@ Config.BaseTime         = 8 -- Time                                             
 Config.TimeOffset       = 0 -- Time offset                                      default: 0
 Config.FreezeTime       = false -- freeze time                                  default: false
 Config.Blackout         = false -- Set blackout                                 default: false
+Config.BlackoutVehicle  = false -- Set blackout affects vehicles                default: false
 Config.NewWeatherTimer  = 10 -- Time (in minutes) between each weather change   default: 10
 Config.Disabled         = false -- Set weather disabled                         default: false
 
 Config.Locale           = 'en' -- Languages : en, fr, pt, tr, pt_br
 
 Config.AvailableWeatherTypes = { -- DON'T TOUCH EXCEPT IF YOU KNOW WHAT YOU ARE DOING
-    'EXTRASUNNY', 
-    'CLEAR', 
-    'NEUTRAL', 
-    'SMOG', 
-    'FOGGY', 
-    'OVERCAST', 
-    'CLOUDS', 
-    'CLEARING', 
-    'RAIN', 
-    'THUNDER', 
-    'SNOW', 
-    'BLIZZARD', 
-    'SNOWLIGHT', 
-    'XMAS', 
+    'EXTRASUNNY',
+    'CLEAR',
+    'NEUTRAL',
+    'SMOG',
+    'FOGGY',
+    'OVERCAST',
+    'CLOUDS',
+    'CLEARING',
+    'RAIN',
+    'THUNDER',
+    'SNOW',
+    'BLIZZARD',
+    'SNOWLIGHT',
+    'XMAS',
     'HALLOWEEN',
 }

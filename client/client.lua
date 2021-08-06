@@ -5,6 +5,7 @@ local timeOffset = Config.TimeOffset
 local timer = 0
 local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
+local blackoutVehicle = Config.BlackoutVehicle
 local disable = Config.Disabled
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
@@ -24,7 +25,7 @@ RegisterNetEvent('qb-weathersync:client:DisableSync')
 AddEventHandler('qb-weathersync:client:DisableSync', function()
 	disable = true
 
-	Citizen.CreateThread(function() 
+	Citizen.CreateThread(function()
 		while disable do
 			SetRainFxIntensity(0.0)
 			SetWeatherTypePersist('EXTRASUNNY')
@@ -56,7 +57,7 @@ AddEventHandler('qb-weathersync:client:RequestCommands', function(isAllowed)
         TriggerEvent('chat:addSuggestion', '/evening', _U('help_eveningcommand'), {})
         TriggerEvent('chat:addSuggestion', '/night', _U('help_nightcommand'), {})
         TriggerEvent('chat:addSuggestion', '/time', _U('help_timecommand'), {
-            { name=_U('help_timehname'), help=_U('help_timeh') }, 
+            { name=_U('help_timehname'), help=_U('help_timeh') },
             { name=_U('help_timemname'), help=_U('help_timem') }
         })
     end
@@ -71,7 +72,8 @@ Citizen.CreateThread(function()
                 Citizen.Wait(15000)
             end
             Citizen.Wait(100) -- Wait 0 seconds to prevent crashing.
-            SetBlackout(blackout)
+            SetArtificialLightsState(blackout)
+            SetArtificialLightsStateAffectsVehicles(blackoutVehicle)
             ClearOverrideWeather()
             ClearWeatherTypePersist()
             SetWeatherTypePersist(lastWeather)
@@ -116,7 +118,7 @@ Citizen.CreateThread(function()
                 timer = GetGameTimer()
             end
             if freezeTime then
-                timeOffset = timeOffset + baseTime - newBaseTime			
+                timeOffset = timeOffset + baseTime - newBaseTime
             end
             baseTime = newBaseTime
             hour = math.floor(((baseTime+timeOffset)/60)%24)
