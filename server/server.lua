@@ -28,12 +28,12 @@ AddEventHandler('qb-weathersync:server:setWeather', function(weather)
         end
     end
     if validWeatherType then
-        print(_U('weather_updated'))
+        print('Weather has been updated')
         CurrentWeather = string.upper(weather)
         newWeatherTimer = Config.NewWeatherTimer
         TriggerEvent('qb-weathersync:server:RequestStateSync')
     else
-        print(_U('weather_invalid'))
+        print('Invalid weather type, valid weather types are: \n EXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN')
     end
 end)
 
@@ -52,10 +52,10 @@ AddEventHandler('qb-weathersync:server:setTime', function(hour, minute)
         else
             ShiftToMinute(0)
         end
-        print(_U('time_change', argh, argm))
+        print('Time has changed to', argh, argm)
         TriggerEvent('qb-weathersync:server:RequestStateSync')
     else
-        print(_U('time_invalid'))
+        print('correct syntax is: time <hour> <minute>')
     end
 end)
 
@@ -78,19 +78,19 @@ RegisterCommand('freezetime', function(source, args)
         if isAllowedToChange(source) then
             freezeTime = not freezeTime
             if freezeTime then
-                TriggerClientEvent('QBCore:Notify', source, _U('time_frozenc'))
+				TriggerClientEvent('QBCore:Notify', source, 'Time is now frozen', 'success', 3000)
             else
-                TriggerClientEvent('QBCore:Notify', source, _U('time_unfrozenc'))
+				TriggerClientEvent('QBCore:Notify', source, 'Time is no longer frozen', 'error', 3000)
             end
         else
-            TriggerClientEvent('QBCore:Notify', source, _U('not_allowed'), 'error')
+			TriggerClientEvent('QBCore:Notify', source, 'You are not allowed to use this command', 'error', 3000)
         end
     else
         freezeTime = not freezeTime
         if freezeTime then
-            print(_U('time_now_frozen'))
+            print('Time is now frozen')
         else
-            print(_U('time_now_unfrozen'))
+            print('Time is no longer frozen')
         end
     end
 end)
@@ -100,19 +100,19 @@ RegisterCommand('freezeweather', function(source, args)
         if isAllowedToChange(source) then
             Config.DynamicWeather = not Config.DynamicWeather
             if not Config.DynamicWeather then
-                TriggerClientEvent('QBCore:Notify', source, _U('dynamic_weather_disabled'))
+				TriggerClientEvent('QBCore:Notify', source, 'Dynamic weather changes are now disabled', 'success', 3000)
             else
-                TriggerClientEvent('QBCore:Notify', source, _U('dynamic_weather_enabled'))
+				TriggerClientEvent('QBCore:Notify', source, 'Dynamic weather changes are now enabled', 'success', 3000)
             end
         else
-            TriggerClientEvent('QBCore:Notify', source, _U('not_allowed'), 'error')
+			TriggerClientEvent('QBCore:Notify', source, 'You are not allowed to use this command', 'error', 3000)
         end
     else
         Config.DynamicWeather = not Config.DynamicWeather
         if not Config.DynamicWeather then
-            print(_U('weather_now_frozen'))
+            print('Weather is now frozen')
         else
-            print(_U('weather_now_unfrozen'))
+            print('Weather is no longer frozen')
         end
     end
 end)
@@ -121,7 +121,7 @@ RegisterCommand('weather', function(source, args)
     if source == 0 then
         local validWeatherType = false
         if args[1] == nil then
-            print(_U('weather_invalid_syntax'))
+            print('correct syntax is: /weather <weathertype>')
             return
         else
             for i,wtype in ipairs(Config.AvailableWeatherTypes) do
@@ -130,19 +130,19 @@ RegisterCommand('weather', function(source, args)
                 end
             end
             if validWeatherType then
-                print(_U('weather_updated'))
+                print('Weather has been updated')
                 CurrentWeather = string.upper(args[1])
                 newWeatherTimer = Config.NewWeatherTimer
                 TriggerEvent('qb-weathersync:server:RequestStateSync')
             else
-                print(_U('weather_invalid'))
+                print('Invalid weather type, valid weather types are: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN')
             end
         end
     else
         if isAllowedToChange(source) then
             local validWeatherType = false
             if args[1] == nil then
-                TriggerClientEvent('QBCore:Notify', source, _U('weather_invalid_syntaxc'), 'error')
+				TriggerClientEvent('QBCore:Notify', source, 'Invalid syntax, use /weather <weatherType> instead', 'error', 3000)
             else
                 for i,wtype in ipairs(Config.AvailableWeatherTypes) do
                     if wtype == string.upper(args[1]) then
@@ -150,17 +150,17 @@ RegisterCommand('weather', function(source, args)
                     end
                 end
                 if validWeatherType then
-                    TriggerClientEvent('QBCore:Notify', source, _U('weather_willchangeto', string.lower(args[1])))
+                    TriggerClientEvent('QBCore:Notify', source, 'Weather will change to:', string.lower(args[1]))
                     CurrentWeather = string.upper(args[1])
                     newWeatherTimer = Config.NewWeatherTimer
                     TriggerEvent('qb-weathersync:server:RequestStateSync')
                 else
-                    TriggerClientEvent('QBCore:Notify', source, _U('weather_invalidc'), 'error')
+					TriggerClientEvent('QBCore:Notify', source, 'Invalid weather type, valid weather types are: ^0\nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN', 'error', 3000)
                 end
             end
         else
-            TriggerClientEvent('QBCore:Notify', source, _U('not_access'), 'error')
-            print(_U('weather_accessdenied'))
+			TriggerClientEvent('QBCore:Notify', source, 'You do not have access to that command', 'error', 3000)
+            print('Access for command /weather denied')
         end
     end
 end)
@@ -169,17 +169,17 @@ RegisterCommand('blackout', function(source)
     if source == 0 then
         blackout = not blackout
         if blackout then
-            print(_U('blackout_enabled'))
+            print('Blackout is now enabled')
         else
-            print(_U('blackout_disabled'))
+            print('Blackout is now disabled')
         end
     else
         if isAllowedToChange(source) then
             blackout = not blackout
             if blackout then
-                TriggerClientEvent('QBCore:Notify', source, _U('blackout_enabledc'))
+				TriggerClientEvent('QBCore:Notify', source, 'Blackout is now enabled', 'success', 3000)
             else
-                TriggerClientEvent('QBCore:Notify', source, _U('blackout_disabledc'))
+				TriggerClientEvent('QBCore:Notify', source, 'Blackout is now disabled', 'success', 3000)
             end
             TriggerEvent('qb-weathersync:server:RequestStateSync')
         end
@@ -188,52 +188,52 @@ end)
 
 RegisterCommand('morning', function(source)
     if source == 0 then
-        print(_U('time_console'))
+        print('For console, use the \"/time <hh> <mm>\" command instead')
         return
     end
     if isAllowedToChange(source) then
         ShiftToMinute(0)
         ShiftToHour(9)
-        TriggerClientEvent('QBCore:Notify', source, _U('time_morning'))
+		TriggerClientEvent('QBCore:Notify', source, 'Time set to morning', 'success', 3000)
         TriggerEvent('qb-weathersync:server:RequestStateSync')
     end
 end)
 
 RegisterCommand('noon', function(source)
     if source == 0 then
-        print(_U('time_console'))
+        print('For console, use the \"/time <hh> <mm>\" command instead')
         return
     end
     if isAllowedToChange(source) then
         ShiftToMinute(0)
         ShiftToHour(12)
-        TriggerClientEvent('QBCore:Notify', source, _U('time_noon'))
+		TriggerClientEvent('QBCore:Notify', source, 'Time set to noon', 'success', 3000)
         TriggerEvent('qb-weathersync:server:RequestStateSync')
     end
 end)
 
 RegisterCommand('evening', function(source)
     if source == 0 then
-        print(_U('time_console'))
+        print('For console, use the \"/time <hh> <mm>\" command instead')
         return
     end
     if isAllowedToChange(source) then
         ShiftToMinute(0)
         ShiftToHour(18)
-        TriggerClientEvent('QBCore:Notify', source, _U('time_evening'))
+		TriggerClientEvent('QBCore:Notify', source, 'Time set to evening', 'success', 3000)
         TriggerEvent('qb-weathersync:server:RequestStateSync')
     end
 end)
 
 RegisterCommand('night', function(source)
     if source == 0 then
-        print(_U('time_console'))
+        print('For console, use the \"/time <hh> <mm>\" command instead')
         return
     end
     if isAllowedToChange(source) then
         ShiftToMinute(0)
         ShiftToHour(23)
-        TriggerClientEvent('QBCore:Notify', source, _U('time_night'))
+		TriggerClientEvent('QBCore:Notify', source, 'Time set to night', 'success', 3000)
         TriggerEvent('qb-weathersync:server:RequestStateSync')
     end
 end)
@@ -261,10 +261,10 @@ RegisterCommand('time', function(source, args, rawCommand)
             else
                 ShiftToMinute(0)
             end
-            print(_U('time_change', argh, argm))
+            print('time_change', argh, argm)
             TriggerEvent('qb-weathersync:server:RequestStateSync')
         else
-            print(_U('time_invalid'))
+            print('Invalid syntax. Use /time <hour> <minute> instead')
         end
     elseif source ~= 0 then
         if isAllowedToChange(source) then
@@ -288,14 +288,14 @@ RegisterCommand('time', function(source, args, rawCommand)
                 else
                     newtime = newtime .. minute
                 end
-                TriggerClientEvent('QBCore:Notify', source, _U('time_changec', newtime))
+                TriggerClientEvent('QBCore:Notify', source, 'Time was changed to: ' .. newtime)
                 TriggerEvent('qb-weathersync:server:RequestStateSync')
             else
-                TriggerClientEvent('QBCore:Notify', source, _U('time_invalid'), 'error')
+                TriggerClientEvent('QBCore:Notify', source, 'correct syntax is: time <hour> <minute>', 'error')
             end
         else
-            TriggerClientEvent('QBCore:Notify', source, _U('not_access'), 'error')
-            print(_U('time_access'))
+            TriggerClientEvent('QBCore:Notify', source, 'You do not have access to that command', 'error')
+            print('Access for command /time denied')
         end
     end
 end)
