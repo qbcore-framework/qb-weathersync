@@ -46,19 +46,19 @@ end)
 RegisterNetEvent('qb-weathersync:client:RequestCommands')
 AddEventHandler('qb-weathersync:client:RequestCommands', function(isAllowed)
     if isAllowed then
-        TriggerEvent('chat:addSuggestion', '/freezetime', _U('help_freezecommand'), {})
-        TriggerEvent('chat:addSuggestion', '/freezeweather', _U('help_freezeweathercommand'), {})
-        TriggerEvent('chat:addSuggestion', '/weather', _U('help_weathercommand'), {
-            { name=_U('help_weathertype'), help=_U('help_availableweather') }
+        TriggerEvent('chat:addSuggestion', '/freezetime', 'Freeze / unfreeze time', {})
+        TriggerEvent('chat:addSuggestion', '/freezeweather', 'Enable/disable dynamic weather changes', {})
+        TriggerEvent('chat:addSuggestion', '/weather', 'Change the weather', {
+            { name=_U('help_weathertype'), help= 'Available types: extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas & halloween' }
         })
-        TriggerEvent('chat:addSuggestion', '/blackout', _U('help_blackoutcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/morning', _U('help_morningcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/noon', _U('help_nooncommand'), {})
-        TriggerEvent('chat:addSuggestion', '/evening', _U('help_eveningcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/night', _U('help_nightcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/time', _U('help_timecommand'), {
-            { name=_U('help_timehname'), help=_U('help_timeh') },
-            { name=_U('help_timemname'), help=_U('help_timem') }
+        TriggerEvent('chat:addSuggestion', '/blackout', 'Toggle blackout mode', {})
+        TriggerEvent('chat:addSuggestion', '/morning', 'Set the time to 09:00', {})
+        TriggerEvent('chat:addSuggestion', '/noon', 'Set the time to 12:00', {})
+        TriggerEvent('chat:addSuggestion', '/evening', 'Set the time to 18:00', {})
+        TriggerEvent('chat:addSuggestion', '/night', 'Set the time to 23:00', {})
+        TriggerEvent('chat:addSuggestion', '/time', 'Change the time', {
+            { name='hours', help='hours' },
+            { name='minutes', help='minutes' }
         })
     end
 end)
