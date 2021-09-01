@@ -109,12 +109,13 @@ end)
 Citizen.CreateThread(function()
     local hour = 0
     local minute = 0
+    local second = 0        --Add seconds for shadow smoothness
     while true do
         if not disable then
             Citizen.Wait(0)
             local newBaseTime = baseTime
-            if GetGameTimer() - 500  > timer then
-                newBaseTime = newBaseTime + 0.25
+            if GetGameTimer() - 22  > timer then    --Generate seconds in client side to avoid communiation
+                second = second + 1                 --Minutes are sent from the server every 2 seconds to keep sync
                 timer = GetGameTimer()
             end
             if freezeTime then
@@ -122,8 +123,11 @@ Citizen.CreateThread(function()
             end
             baseTime = newBaseTime
             hour = math.floor(((baseTime+timeOffset)/60)%24)
-            minute = math.floor((baseTime+timeOffset)%60)
-            NetworkOverrideClockTime(hour, minute, 0)
+            if minute ~= math.floor((baseTime+timeOffset)%60) then  --Reset seconds to 0 when new minute
+                minute = math.floor((baseTime+timeOffset)%60)
+                second = 0
+            end
+            NetworkOverrideClockTime(hour, minute, second)          --Send hour included seconds to network clock time
         else
             Citizen.Wait(1000)
         end

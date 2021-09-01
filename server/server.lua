@@ -301,19 +301,23 @@ RegisterCommand('time', function(source, args, rawCommand)
 end)
 
 Citizen.CreateThread(function()
+    local previous = 0
     while true do
         Citizen.Wait(0)
-        local newBaseTime = os.time(os.date("!*t"))/2 + 360
-        if freezeTime then
-            timeOffset = timeOffset + baseTime - newBaseTime			
-        end
-        baseTime = newBaseTime
+        local newBaseTime = os.time(os.date("!*t"))/2 + 360         --Set the server time depending of OS time
+        if (newBaseTime % 60) ~= previous then                      --Check if a new minute is passed
+            previous = newBaseTime % 60                             --Only update time with plain minutes, seconds are handled in the client
+            if freezeTime then
+                timeOffset = timeOffset + baseTime - newBaseTime			
+            end
+            baseTime = newBaseTime
+        end 
     end
 end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(5000)
+        Citizen.Wait(2000)                                          --Change to send every minute in game sync
         TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
     end
 end)
