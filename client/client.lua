@@ -1,4 +1,4 @@
-CurrentWeather = Config.StartWeather
+local CurrentWeather = Config.StartWeather
 local lastWeather = CurrentWeather
 local baseTime = Config.BaseTime
 local timeOffset = Config.TimeOffset
