@@ -11,7 +11,7 @@ Locales['en'] = {
     ['time_change'] = 'Time has changed to %s:%s.',
     ['time_changec'] = 'Time was changed to: %s!',
     ['time_invalid'] = 'Invalid syntax, correct syntax is: time <hour> <minute> !',
-    ['time_invalidc'] = 'Error: Invalid syntax. Use /time <hour> <minute> instead!',
+    ['time_invalidc'] = 'Invalid syntax. Use /time <hour> <minute> instead!',
     ['time_access'] = 'Access for command /time denied.',
 
     ['dynamic_weather_disabled'] = 'Dynamic weather changes are now disabled.',
@@ -20,10 +20,10 @@ Locales['en'] = {
     ['weather_now_frozen'] = 'Weather is now frozen.',
     ['weather_now_unfrozen'] = 'Weather is no longer frozen.',
     ['weather_invalid_syntax'] = 'Invalid syntax, correct syntax is: /weather <weathertype> ',
-    ['weather_invalid_syntaxc'] = 'Error: Invalid syntax, use /weather <weatherType> instead!',
+    ['weather_invalid_syntaxc'] = 'Invalid syntax, use /weather <weatherType> instead!',
     ['weather_updated'] = 'Weather has been updated.',
     ['weather_invalid'] = 'Invalid weather type, valid weather types are: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
-    ['weather_invalidc'] = 'Error: Invalid weather type, valid weather types are: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
+    ['weather_invalidc'] = 'Invalid weather type, valid weather types are: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
     ['weather_willchangeto'] = 'Weather will change to: %s.',
     ['weather_accessdenied'] = 'Access for command /weather denied.',
 
@@ -48,6 +48,6 @@ Locales['en'] = {
     ['help_nightcommand'] = 'Set the time to 23:00',
     ['help_blackoutcommand'] = 'Toggle blackout mode.',
 
-    ['not_access'] = 'Error: You do not have access to that command.',
-    ['not_allowed'] = 'Error: You are not allowed to use this command.',
+    ['not_access'] = 'You do not have access to that command.',
+    ['not_allowed'] = 'You are not allowed to use this command.',
 }
