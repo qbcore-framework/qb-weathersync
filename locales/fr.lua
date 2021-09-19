@@ -48,6 +48,6 @@ Locales['fr'] = {
     ['help_nightcommand'] = 'Met le temps à 23:00',
     ['help_blackoutcommand'] = 'Active la coupure électrique',
 
-    ['not_access'] = "^Erreur: Vous n'avez pas accès à cette commande.",
+    ['not_access'] = "Erreur: Vous n'avez pas accès à cette commande.",
     ['not_allowed'] = "Erreur: Vous n'avez pas accès à cette commande.",
 }
