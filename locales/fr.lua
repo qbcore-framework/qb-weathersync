@@ -11,7 +11,7 @@ Locales['fr'] = {
     ['time_change'] = 'Le temps à été changer à %s:%s.',
     ['time_changec'] = 'Le temps à été changer à : %s!',
     ['time_invalid'] = 'Mauvaise syntax, la syntax correct est: time <heure> <minute> !',
-    ['time_invalidc'] = '^8Erreurr: ^1Mauvaise syntax. Utiliser ^0/time <heure> <minute> ^1à la place!',
+    ['time_invalidc'] = 'Erreur: Mauvaise syntax. Utiliser ^0/time <heure> <minute> ^1à la place!',
     ['time_access'] = 'Access for command /time denied.',
 
     ['dynamic_weather_disabled'] = 'Changement dynamique de la météo désactiver',
@@ -20,10 +20,10 @@ Locales['fr'] = {
     ['weather_now_frozen'] = 'La météo est figé',
     ['weather_now_unfrozen'] = "La météo n'es plus figé",
     ['weather_invalid_syntax'] = 'Mauvaise syntax, la syntax correct est: /weather <type de météo> ',
-    ['weather_invalid_syntaxc'] = '^8Erreur: ^1Mauvaise syntax, utiliser ^0/weather <type de météo> ^1à la place!',
+    ['weather_invalid_syntaxc'] = 'Erreur: Mauvaise syntax, utiliser ^0/weather <type de météo> ^1à la place!',
     ['weather_updated'] = 'La météo à été mis a jour',
     ['weather_invalid'] = 'Type de météo invalide, les types de météo valides sont: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
-    ['weather_invalidc'] = '^8Erreur: ^1Type de météo invalide, les types de météo valides sont: ^0\nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
+    ['weather_invalidc'] = 'Erreur: Type de météo invalide, les types de météo valides sont: ^0\nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
     ['weather_willchangeto'] = 'La météo vas changer à: %s.',
     ['weather_accessdenied'] = 'Accès à la command /weather refusée.',
 
@@ -48,6 +48,6 @@ Locales['fr'] = {
     ['help_nightcommand'] = 'Met le temps à 23:00',
     ['help_blackoutcommand'] = 'Active la coupure électrique',
 
-    ['not_access'] = "^8Erreur: ^1Vous n'avez pas accès à cette commande.",
-    ['not_allowed'] = "^8Erreur: ^1Vous n'avez pas accès à cette commande.",
+    ['not_access'] = "^Erreur: Vous n'avez pas accès à cette commande.",
+    ['not_allowed'] = "Erreur: Vous n'avez pas accès à cette commande.",
 }
