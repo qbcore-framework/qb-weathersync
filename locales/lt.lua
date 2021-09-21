@@ -11,7 +11,7 @@ Locales['lt'] = {
     ['time_change'] = 'Laikas nustatytas į %s:%s.',
     ['time_changec'] = 'Laikas nustatytas į: %s!',
     ['time_invalid'] = 'Neteisinga sintaksė, teisinga sintaksė: time <valanda> <minutė>!',
-    ['time_invalidc'] = 'Klaida: Neteisinga sintaksė. Naudokite /time <valanda> <minutė>!',
+    ['time_invalidc'] = 'Neteisinga sintaksė. Naudokite /time <valanda> <minutė>!',
     ['time_access'] = 'Komandos /time prieiga neleidžiama.',
 
     ['dynamic_weather_disabled'] = 'Dinaminių orų keitimasis išjungtas.',
@@ -20,10 +20,10 @@ Locales['lt'] = {
     ['weather_now_frozen'] = 'Orai sustabdyti.',
     ['weather_now_unfrozen'] = 'Orai nebe sustoję.',
     ['weather_invalid_syntax'] = 'Neteisinga sintaksė, teisinga sintaksė yra: /weather <orų tipas> ',
-    ['weather_invalid_syntaxc'] = 'Klaida: Neteisinga sintaksė, naudokite /weather <orų tipas>!',
+    ['weather_invalid_syntaxc'] = 'Neteisinga sintaksė, naudokite /weather <orų tipas>!',
     ['weather_updated'] = 'Orai buvo atnaujinti.',
     ['weather_invalid'] = 'Neteisingas orų tipas, galimi orų tipai: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN',
-    ['weather_invalidc'] = 'Klaida: Neteisingas orų tipas, galimi orų tipai: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN',
+    ['weather_invalidc'] = 'Neteisingas orų tipas, galimi orų tipai: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN',
     ['weather_willchangeto'] = 'Orai pasikeisti į: %s.',
     ['weather_accessdenied'] = 'Komandos /weather prieiga neleidžiama.',
 
@@ -48,6 +48,6 @@ Locales['lt'] = {
     ['help_nightcommand'] = 'Laikas nustatytas į 23:00',
     ['help_blackoutcommand'] = 'Užtemimo nustatymas.',
 
-    ['not_access'] = 'Klaida: Jūs neturite leidimo šiai komandai.',
-    ['not_allowed'] = 'Klaida: Jums neleidžiama naudoti šios komandos.',
+    ['not_access'] = 'Jūs neturite leidimo šiai komandai.',
+    ['not_allowed'] = 'Jums neleidžiama naudoti šios komandos.',
 }
