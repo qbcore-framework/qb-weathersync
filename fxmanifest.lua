@@ -7,16 +7,14 @@ version '1.0.2'
 shared_scripts { 
 	'@qb-core/import.lua',
 	'config.lua',
+	'locale.lua',
+	'locales/*.lua'
 }
 
 server_scripts {
-	'locale.lua',
-	'locales/en.lua',
 	'server/server.lua'
 }
 
 client_scripts {
-	'locale.lua',
-	'locales/en.lua',
 	'client/client.lua'
 }
