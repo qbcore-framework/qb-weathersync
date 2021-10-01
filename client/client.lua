@@ -135,8 +135,8 @@ end)
 local EventActive = false
 local FrozenVeh = nil
 
-RegisterNetEvent('qb-event:client:EventMovie')
-AddEventHandler('qb-event:client:EventMovie', function()
+RegisterNetEvent('qb-weathersync:client:EventMovie')
+AddEventHandler('qb-weathersync:client:EventMovie', function()
     if not EventActive then
         SetNuiFocus(true, false)
         SendNUIMessage({
