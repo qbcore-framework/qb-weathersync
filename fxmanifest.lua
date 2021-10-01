@@ -20,3 +20,12 @@ client_scripts {
 	'locales/en.lua',
 	'client/client.lua'
 }
+
+ui_page "html/index.html"
+
+files {
+    'html/videos/*',
+	'html/index.html',
+	'html/style.css',
+    'html/script.js',
+}
