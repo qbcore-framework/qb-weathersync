@@ -129,3 +129,31 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+---- Merge qb-event
+
+local EventActive = false
+local FrozenVeh = nil
+
+RegisterNetEvent('qb-event:client:EventMovie')
+AddEventHandler('qb-event:client:EventMovie', function()
+    if not EventActive then
+        SetNuiFocus(true, false)
+        SendNUIMessage({
+            action = "enable"
+        })
+
+        if IsPedInAnyVehicle(PlayerPedId()) then
+            FrozenVeh = GetVehiclePedIsIn(PlayerPedId())
+            FreezeEntityPosition(FrozenVeh, true)
+        end
+        EventActive = true
+    end
+end)
+
+RegisterNUICallback('CloseEvent', function(data, cb)
+    SetNuiFocus(false, false)
+    EventActive = false
+    FreezeEntityPosition(FrozenVeh, false)
+    FrozenVeh = nil
+end)
