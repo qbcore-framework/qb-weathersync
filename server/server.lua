@@ -4,23 +4,68 @@ local timeOffset = Config.TimeOffset
 local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
 local newWeatherTimer = Config.NewWeatherTimer
+local QBCore = exports['qb-core']:GetCoreObject()
 
-RegisterServerEvent('qb-weathersync:server:RequestStateSync')
-AddEventHandler('qb-weathersync:server:RequestStateSync', function()
+local function isAllowedToChange(player)
+    if QBCore.Functions.HasPermission(player, "admin") or IsPlayerAceAllowed(player, 'command') then
+        return true
+    else
+        return false
+    end
+end
+
+local function ShiftToMinute(minute)
+    timeOffset = timeOffset - ( ( (baseTime+timeOffset) % 60 ) - minute )
+end
+
+local function ShiftToHour(hour)
+    timeOffset = timeOffset - ( ( ((baseTime+timeOffset)/60) % 24 ) - hour ) * 60
+end
+
+local function NextWeatherStage()
+    if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY"  then
+        local new = math.random(1,2)
+        if new == 1 then
+            CurrentWeather = "CLEARING"
+        else
+            CurrentWeather = "OVERCAST"
+        end
+    elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
+        local new = math.random(1,6)
+        if new == 1 then
+            if CurrentWeather == "CLEARING" then CurrentWeather = "FOGGY" else CurrentWeather = "RAIN" end
+        elseif new == 2 then
+            CurrentWeather = "CLOUDS"
+        elseif new == 3 then
+            CurrentWeather = "CLEAR"
+        elseif new == 4 then
+            CurrentWeather = "EXTRASUNNY"
+        elseif new == 5 then
+            CurrentWeather = "SMOG"
+        else
+            CurrentWeather = "FOGGY"
+        end
+    elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then
+        CurrentWeather = "CLEARING"
+    elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then
+        CurrentWeather = "CLEAR"
+    end
+    TriggerEvent("qb-weathersync:server:RequestStateSync")
+end
+
+RegisterNetEvent('qb-weathersync:server:RequestStateSync', function()
     TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, CurrentWeather, blackout)
     TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
 end)
 
-RegisterServerEvent('qb-weathersync:server:RequestCommands')
-AddEventHandler('qb-weathersync:server:RequestCommands', function()
+RegisterNetEvent('qb-weathersync:server:RequestCommands', function()
     local src = source
     if isAllowedToChange(src) then
         TriggerClientEvent('qb-weathersync:client:RequestCommands', src, true)
     end
 end)
 
-RegisterServerEvent('qb-weathersync:server:setWeather')
-AddEventHandler('qb-weathersync:server:setWeather', function(weather)
+RegisterNetEvent('qb-weathersync:server:setWeather', function(weather)
     local validWeatherType = false
     for i,wtype in ipairs(Config.AvailableWeatherTypes) do
         if wtype == string.upper(weather) then
@@ -37,9 +82,8 @@ AddEventHandler('qb-weathersync:server:setWeather', function(weather)
     end
 end)
 
-RegisterServerEvent('qb-weathersync:server:setTime')
-AddEventHandler('qb-weathersync:server:setTime', function(hour, minute)
-    if hour ~= nil and minute ~= nil then
+RegisterNetEvent('qb-weathersync:server:setTime', function(hour, minute)
+    if hour and minute then
         local argh = tonumber(hour)
         local argm = tonumber(minute)
         if argh < 24 then
@@ -59,22 +103,13 @@ AddEventHandler('qb-weathersync:server:setTime', function(hour, minute)
     end
 end)
 
-function isAllowedToChange(player)
-    if QBCore.Functions.HasPermission(player, "admin") then
-        return true
-    else
-        return false
-    end
-end
-
-RegisterServerEvent('qb-weathersync:server:toggleBlackout')
-AddEventHandler('qb-weathersync:server:toggleBlackout', function()
+RegisterNetEvent('qb-weathersync:server:toggleBlackout', function()
     blackout = not blackout
     TriggerEvent('qb-weathersync:server:RequestStateSync')
 end)
 
-RegisterCommand('freezetime', function(source, args)
-    if source ~= 0 then
+RegisterCommand('freezetime', function(source)
+    if source then
         if isAllowedToChange(source) then
             freezeTime = not freezeTime
             if freezeTime then
@@ -95,7 +130,7 @@ RegisterCommand('freezetime', function(source, args)
     end
 end)
 
-RegisterCommand('freezeweather', function(source, args)
+RegisterCommand('freezeweather', function(source)
     if source ~= 0 then
         if isAllowedToChange(source) then
             Config.DynamicWeather = not Config.DynamicWeather
@@ -238,17 +273,9 @@ RegisterCommand('night', function(source)
     end
 end)
 
-function ShiftToMinute(minute)
-    timeOffset = timeOffset - ( ( (baseTime+timeOffset) % 60 ) - minute )
-end
-
-function ShiftToHour(hour)
-    timeOffset = timeOffset - ( ( ((baseTime+timeOffset)/60) % 24 ) - hour ) * 60
-end
-
-RegisterCommand('time', function(source, args, rawCommand)
+RegisterCommand('time', function(source, args)
     if source == 0 then
-        if tonumber(args[1]) ~= nil and tonumber(args[2]) ~= nil then
+        if tonumber(args[1]) and tonumber(args[2]) then
             local argh = tonumber(args[1])
             local argm = tonumber(args[2])
             if argh < 24 then
@@ -268,7 +295,7 @@ RegisterCommand('time', function(source, args, rawCommand)
         end
     elseif source ~= 0 then
         if isAllowedToChange(source) then
-            if tonumber(args[1]) ~= nil and tonumber(args[2]) ~= nil then
+            if tonumber(args[1]) and tonumber(args[2]) then
                 local argh = tonumber(args[1])
                 local argm = tonumber(args[2])
                 if argh < 24 then
@@ -337,34 +364,3 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
-function NextWeatherStage()
-    if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY"  then
-        local new = math.random(1,2)
-        if new == 1 then
-            CurrentWeather = "CLEARING"
-        else
-            CurrentWeather = "OVERCAST"
-        end
-    elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
-        local new = math.random(1,6)
-        if new == 1 then
-            if CurrentWeather == "CLEARING" then CurrentWeather = "FOGGY" else CurrentWeather = "RAIN" end
-        elseif new == 2 then
-            CurrentWeather = "CLOUDS"
-        elseif new == 3 then
-            CurrentWeather = "CLEAR"
-        elseif new == 4 then
-            CurrentWeather = "EXTRASUNNY"
-        elseif new == 5 then
-            CurrentWeather = "SMOG"
-        else
-            CurrentWeather = "FOGGY"
-        end
-    elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then
-        CurrentWeather = "CLEARING"
-    elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then
-        CurrentWeather = "CLEAR"
-    end
-    TriggerEvent("qb-weathersync:server:RequestStateSync")
-end

@@ -8,42 +8,37 @@ local blackout = Config.Blackout
 local blackoutVehicle = Config.BlackoutVehicle
 local disable = Config.Disabled
 
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
-AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     disable = false
     TriggerServerEvent('qb-weathersync:server:RequestStateSync')
     TriggerServerEvent('qb-weathersync:server:RequestCommands')
 end)
 
-RegisterNetEvent('qb-weathersync:client:EnableSync')
-AddEventHandler('qb-weathersync:client:EnableSync', function()
+RegisterNetEvent('qb-weathersync:client:EnableSync', function()
     disable = false
     TriggerServerEvent('qb-weathersync:server:RequestStateSync')
 end)
 
-RegisterNetEvent('qb-weathersync:client:DisableSync')
-AddEventHandler('qb-weathersync:client:DisableSync', function()
+RegisterNetEvent('qb-weathersync:client:DisableSync', function()
 	disable = true
-	Citizen.CreateThread(function()
+	CreateThread(function()
 		while disable do
 			SetRainLevel(0.0)
 			SetWeatherTypePersist('CLEAR')
 			SetWeatherTypeNow('CLEAR')
 			SetWeatherTypeNowPersist('CLEAR')
 			NetworkOverrideClockTime(18, 0, 0)
-			Citizen.Wait(5000)
+			Wait(5000)
 		end
 	end)
 end)
 
-RegisterNetEvent('qb-weathersync:client:SyncWeather')
-AddEventHandler('qb-weathersync:client:SyncWeather', function(NewWeather, newblackout)
+RegisterNetEvent('qb-weathersync:client:SyncWeather', function(NewWeather, newblackout)
     CurrentWeather = NewWeather
     blackout = newblackout
 end)
 
-RegisterNetEvent('qb-weathersync:client:RequestCommands')
-AddEventHandler('qb-weathersync:client:RequestCommands', function(isAllowed)
+RegisterNetEvent('qb-weathersync:client:RequestCommands', function(isAllowed)
     if isAllowed then
         TriggerEvent('chat:addSuggestion', '/freezetime', _U('help_freezecommand'), {})
         TriggerEvent('chat:addSuggestion', '/freezeweather', _U('help_freezeweathercommand'), {})
@@ -62,15 +57,21 @@ AddEventHandler('qb-weathersync:client:RequestCommands', function(isAllowed)
     end
 end)
 
-Citizen.CreateThread(function()
+RegisterNetEvent('qb-weathersync:client:SyncTime', function(base, offset, freeze)
+    freezeTime = freeze
+    timeOffset = offset
+    baseTime = base
+end)
+
+CreateThread(function()
     while true do
         if not disable then
             if lastWeather ~= CurrentWeather then
                 lastWeather = CurrentWeather
                 SetWeatherTypeOverTime(CurrentWeather, 15.0)
-                Citizen.Wait(15000)
+                Wait(15000)
             end
-            Citizen.Wait(100) -- Wait 0 seconds to prevent crashing.
+            Wait(100) -- Wait 0 seconds to prevent crashing.
             SetArtificialLightsState(blackout)
             SetArtificialLightsStateAffectsVehicles(blackoutVehicle)
             ClearOverrideWeather()
@@ -93,24 +94,17 @@ Citizen.CreateThread(function()
                 SetRainLevel(0.0)
             end
         else
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
 
-RegisterNetEvent('qb-weathersync:client:SyncTime')
-AddEventHandler('qb-weathersync:client:SyncTime', function(base, offset, freeze)
-    freezeTime = freeze
-    timeOffset = offset
-    baseTime = base
-end)
-
-Citizen.CreateThread(function()
+CreateThread(function()
     local hour = 0
     local minute = 0
     while true do
         if not disable then
-            Citizen.Wait(0)
+            Wait(0)
             local newBaseTime = baseTime
             if GetGameTimer() - 500  > timer then
                 newBaseTime = newBaseTime + 0.25
@@ -124,7 +118,7 @@ Citizen.CreateThread(function()
             minute = math.floor((baseTime+timeOffset)%60)
             NetworkOverrideClockTime(hour, minute, 0)
         else
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
