@@ -24,14 +24,13 @@ end)
 RegisterNetEvent('qb-weathersync:client:DisableSync')
 AddEventHandler('qb-weathersync:client:DisableSync', function()
 	disable = true
-
 	Citizen.CreateThread(function()
 		while disable do
-			SetRainFxIntensity(0.0)
-			SetWeatherTypePersist('EXTRASUNNY')
-			SetWeatherTypeNow('EXTRASUNNY')
-			SetWeatherTypeNowPersist('EXTRASUNNY')
-			NetworkOverrideClockTime(23, 0, 0)
+			SetRainLevel(0.0)
+			SetWeatherTypePersist('CLEAR')
+			SetWeatherTypeNow('CLEAR')
+			SetWeatherTypeNowPersist('CLEAR')
+			NetworkOverrideClockTime(18, 0, 0)
 			Citizen.Wait(5000)
 		end
 	end)
