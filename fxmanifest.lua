@@ -1,20 +1,16 @@
-fx_version 'bodacious'
+fx_version 'cerulean'
 game 'gta5'
 
 description 'vSyncRevamped'
 version '1.0.2'
 
-shared_scripts { 
-	'@qb-core/import.lua',
+shared_scripts {
 	'config.lua',
 	'locale.lua',
 	'locales/*.lua'
 }
 
-server_scripts {
-	'server/server.lua'
-}
+server_script 'server/server.lua'
+client_script 'client/client.lua'
 
-client_scripts {
-	'client/client.lua'
-}
+lua54 'yes'
