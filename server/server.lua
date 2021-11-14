@@ -327,10 +327,10 @@ RegisterCommand('time', function(source, args)
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     local previous = 0
     while true do
-        Citizen.Wait(0)
+        Wait(0)
         local newBaseTime = os.time(os.date("!*t"))/2 + 360         --Set the server time depending of OS time
         if (newBaseTime % 60) ~= previous then                      --Check if a new minute is passed
             previous = newBaseTime % 60                             --Only update time with plain minutes, seconds are handled in the client
@@ -342,24 +342,24 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-        Citizen.Wait(2000)                                          --Change to send every minute in game sync
+        Wait(2000)                                          --Change to send every minute in game sync
         TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-        Citizen.Wait(300000)
+        Wait(300000)
         TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, CurrentWeather, blackout)
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         newWeatherTimer = newWeatherTimer - 1
-        Citizen.Wait((1000 * 60) * Config.NewWeatherTimer)
+        Wait((1000 * 60) * Config.NewWeatherTimer)
         if newWeatherTimer == 0 then
             if Config.DynamicWeather then
                 NextWeatherStage()
