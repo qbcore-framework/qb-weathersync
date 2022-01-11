@@ -40,19 +40,19 @@ end)
 
 RegisterNetEvent('qb-weathersync:client:RequestCommands', function(isAllowed)
     if isAllowed then
-        TriggerEvent('chat:addSuggestion', '/freezetime', _U('help_freezecommand'), {})
-        TriggerEvent('chat:addSuggestion', '/freezeweather', _U('help_freezeweathercommand'), {})
-        TriggerEvent('chat:addSuggestion', '/weather', _U('help_weathercommand'), {
-            { name=_U('help_weathertype'), help=_U('help_availableweather') }
+        TriggerEvent('chat:addSuggestion', '/freezetime', Lang:t('help.freezecommand'), {})
+        TriggerEvent('chat:addSuggestion', '/freezeweather', Lang:t('help.freezeweathercommand'), {})
+        TriggerEvent('chat:addSuggestion', '/weather', Lang:t('help.weathercommand'), {
+            { name=Lang:t('help.weathertype'), help=Lang:t('help.availableweather') }
         })
-        TriggerEvent('chat:addSuggestion', '/blackout', _U('help_blackoutcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/morning', _U('help_morningcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/noon', _U('help_nooncommand'), {})
-        TriggerEvent('chat:addSuggestion', '/evening', _U('help_eveningcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/night', _U('help_nightcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/time', _U('help_timecommand'), {
-            { name=_U('help_timehname'), help=_U('help_timeh') },
-            { name=_U('help_timemname'), help=_U('help_timem') }
+        TriggerEvent('chat:addSuggestion', '/blackout', Lang:t('help.blackoutcommand'), {})
+        TriggerEvent('chat:addSuggestion', '/morning', Lang:t('help.morningcommand'), {})
+        TriggerEvent('chat:addSuggestion', '/noon', Lang:t('help.nooncommand'), {})
+        TriggerEvent('chat:addSuggestion', '/evening', Lang:t('help.eveningcommand'), {})
+        TriggerEvent('chat:addSuggestion', '/night', Lang:t('help.nightcommand'), {})
+        TriggerEvent('chat:addSuggestion', '/time', Lang:t('help.timecommand'), {
+            { name=Lang:t('help.timehname'), help=Lang:t('help.timeh') },
+            { name=Lang:t('help.timemname'), help=Lang:t('help.timem') }
         })
     end
 end)
