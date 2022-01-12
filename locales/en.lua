@@ -9,8 +9,7 @@ local Translations = {
         invalidc = 'Invalid weather type, valid weather types are: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
         willchangeto = 'Weather will change to: %{value}.',
         accessdenied = 'Access for command /weather denied.',
-    },      
-
+    },
     dynamic_weather = {
         disabled = 'Dynamic weather changes are now disabled.',
         enabled = 'Dynamic weather changes are now enabled.',
@@ -20,7 +19,6 @@ local Translations = {
         unfrozenc = 'Time is no longer frozen.',
         now_frozen = 'Time is now frozen.',
         now_unfrozen = 'Time is no longer frozen.',
-        console = 'For console, use the \"/time <hh> <mm>\" command instead!',
         morning = 'Time set to morning.',
         noon = 'Time set to noon.',
         evening = 'Time set to evening.',
@@ -30,7 +28,7 @@ local Translations = {
         invalid = 'Invalid syntax, correct syntax is: time <hour> <minute> !',
         invalidc = 'Invalid syntax. Use /time <hour> <minute> instead!',
         access = 'Access for command /time denied.',
-    },    
+    },
     blackout = {
         enabled = 'Blackout is now enabled.',
         enabledc = 'Blackout is now enabled.',
@@ -64,6 +62,6 @@ if GetConvar('qb_locale', 'en') == 'en' then
     Lang = Locale:new({
         phrases = Translations,
         warnOnMissing = true
-    })    
+    })
 end
 

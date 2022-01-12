@@ -9,8 +9,7 @@ local Translations = {
         invalidc = 'Helytelen időjárás típus. Használd ezeket: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
         willchangeto = 'Az időjárás megváltozott: %{value}.',
         accessdenied = 'Nincs Jogosultságod a /weather parancs használatához.',
-    },      
-
+    },
     dynamic_weather = {
         disabled = 'Dinamikus időjárás változások kikapcsolva.',
         enabled = 'Dinamikus időjárás változások kikapcsolva.',
@@ -20,7 +19,6 @@ local Translations = {
         unfrozenc = 'Idő elindítva',
         now_frozen = 'Idő leállítva.',
         now_unfrozen = 'Idő elindítva',
-        console = 'Konzolhoz használd a \"/time <hh> <mm>\" parancsot!',
         morning = 'Idő reggelre állítva.',
         noon = 'Idő délre állítva.',
         evening = 'Idő estére állítva.',
@@ -30,7 +28,7 @@ local Translations = {
         invalid = 'Rossz szintaktika, használd ezt: time <hour> <minute> !',
         invalidc = 'Rossz szintaktika, használd ezt: /time <hour> <minute> !',
         access = 'Nincs jogosultságod a /time parancshasználatához.',
-    },    
+    },
     blackout = {
         enabled = 'Áramszünet bekapcsolva.',
         enabledc = 'Áramszünet bekapcsolva.',
@@ -64,5 +62,5 @@ if GetConvar('qb_locale', 'en') == 'hu' then
     Lang = Locale:new({
         phrases = Translations,
         warnOnMissing = true
-    })    
+    })
 end
