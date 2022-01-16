@@ -9,8 +9,7 @@ local Translations = {
         invalidc = 'Neteisingas orų tipas, galimi orų tipai: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN',
         willchangeto = 'Orai pasikeisti į: %{value}.',
         accessdenied = 'Komandos /weather prieiga neleidžiama.',
-    },      
-
+    },
     dynamic_weather = {
         disabled = 'Dinaminių orų keitimasis išjungtas.',
         enabled = 'Dinaminių orų keitimasis įjungtas.',
@@ -20,7 +19,6 @@ local Translations = {
         unfrozenc = 'Laikas nebe sustojęs.',
         now_frozen = 'Laikas sustabdytas.',
         now_unfrozen = 'Laikas nebe sustojęs.',
-        console = 'Konsolėje naudokite komandą \"/time <hh> <mm>\"!',
         morning = 'Nustatytas ryto laikas.',
         noon = 'Nustatytas pietų laikas.',
         evening = 'Nustatytas vakaro laikas.',
@@ -30,7 +28,7 @@ local Translations = {
         invalid = 'Neteisinga sintaksė, teisinga sintaksė: time <valanda> <minutė>!',
         invalidc = 'Neteisinga sintaksė. Naudokite /time <valanda> <minutė>!',
         access = 'Komandos /time prieiga neleidžiama.',
-    },    
+    },
     blackout = {
         enabled = 'Užtemimas įjungtas.',
         enabledc = 'Užtemimas įjungtas.',
@@ -64,5 +62,5 @@ if GetConvar('qb_locale', 'en') == 'lt' then
     Lang = Locale:new({
         phrases = Translations,
         warnOnMissing = true
-    })    
+    })
 end

@@ -19,7 +19,6 @@ local Translations = {
         unfrozenc = 'Die Zeit ist nicht mehr eingefroren.',
         now_frozen = 'Die Zeit ist jetzt eingefroren.',
         now_unfrozen = 'Die Zeit ist nicht mehr eingefroren.',
-        console = 'Für die Konsole verwende stattdessen den Befehl \"/time <hh> <mm>\" !',
         morning = 'Zeit auf Morgen eingestellt.',
         noon = 'Zeit auf Mittag eingestellt.',
         evening = 'Zeit auf Abend eingestellt.',
@@ -29,7 +28,7 @@ local Translations = {
         invalid = 'Ungültige Syntax, die richtige Syntax ist: time <hour> <minute> !',
         invalidc = 'Ungültige Syntax. Benutze stattdessen /time <hour> <minute> !',
         access = 'Zugriff auf den Befehl /time verweigert.',
-    },    
+    },
     blackout = {
         enabled = 'Blackout ist jetzt aktiviert.',
         enabledc = 'Blackout ist jetzt aktiviert.',
@@ -63,6 +62,6 @@ if GetConvar('qb_locale', 'en') == 'de' then
     Lang = Locale:new({
         phrases = Translations,
         warnOnMissing = true
-    })    
+    })
 end
 

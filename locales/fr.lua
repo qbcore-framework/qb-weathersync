@@ -9,8 +9,7 @@ local Translations = {
         invalidc = 'Erreur: Type de météo invalide, les types de météo valides sont: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
         willchangeto = 'La météo vas changer à: %{value}.',
         accessdenied = 'Accès à la command /weather refusée.',
-    },      
-
+    },
     dynamic_weather = {
         disabled = 'Changement dynamique de la météo désactiver',
         enabled = 'Changement dynamique de la météo activé',
@@ -20,7 +19,6 @@ local Translations = {
         unfrozenc = "Le temps n'es plus figé",
         now_frozen = 'Le temps est maintenant figé ',
         now_unfrozen = "Le temps n'es plus figé",
-        console = 'Pour la console, utiliser la command  \"/time <hh> <mm>\"',
         morning = 'Le temps à été mis au matin',
         noon = 'Le temps à été mis au midi',
         evening = "Le temps à été mis a l'après-midi",
@@ -30,7 +28,7 @@ local Translations = {
         invalid = 'Mauvaise syntax, la syntax correct est: time <heure> <minute> !',
         invalidc = 'Erreur: Mauvaise syntax. Utiliser /time <heure> <minute> à la place!',
         access = 'Access for command /time denied.',
-    },    
+    },
     blackout = {
         enabled = 'Coupure électrique activée.',
         enabledc = 'Coupure électrique activée.',
@@ -64,5 +62,5 @@ if GetConvar('qb_locale', 'en') == 'fr' then
     Lang = Locale:new({
         phrases = Translations,
         warnOnMissing = true
-    })    
+    })
 end

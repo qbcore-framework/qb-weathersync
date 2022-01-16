@@ -2,11 +2,11 @@ fx_version 'cerulean'
 game 'gta5'
 
 description 'vSyncRevamped'
-version '1.0.2'
+version '2.0.0'
 
 shared_scripts {
 	'config.lua',
-        '@qb-core/shared/locale.lua',
+	'@qb-core/shared/locale.lua',
 	'locales/*.lua'
 }
 
