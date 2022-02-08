@@ -7,8 +7,8 @@ local blackout = Config.Blackout
 local newWeatherTimer = Config.NewWeatherTimer
 
 --- Is the source a client or the server
---- @param src string or number - Source to check
---- @return int - Source
+--- @param src string | number - source to check
+--- @return int - source
 local function getSource(src)
     if src == '' then
         return 0 
