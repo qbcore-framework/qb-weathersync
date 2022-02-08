@@ -6,6 +6,16 @@ local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
 local newWeatherTimer = Config.NewWeatherTimer
 
+--- Is the source a client or the server
+--- @param src number - Source to check
+--- @return boolean - has permission
+local function getSource(src)
+    if src == '' then
+        return 0 
+    end
+    return src
+end
+
 --- Does source have permissions to run admin commands
 --- @param src number - Source to check
 --- @return boolean - has permission
@@ -131,7 +141,7 @@ RegisterNetEvent('qb-weathersync:server:RequestCommands', function()
 end)
 
 RegisterNetEvent('qb-weathersync:server:setWeather', function(weather)
-    local src = source
+    local src = getSource(source)
     if isAllowedToChange(src) then
         local success = setWeather(weather)
         if src > 0 then
@@ -143,7 +153,7 @@ RegisterNetEvent('qb-weathersync:server:setWeather', function(weather)
 end)
 
 RegisterNetEvent('qb-weathersync:server:setTime', function(hour, minute)
-    local src = source
+    local src = getSource(source)
     if isAllowedToChange(src) then
         local success = setTime(hour, minute)
         if src > 0 then
@@ -155,7 +165,7 @@ RegisterNetEvent('qb-weathersync:server:setTime', function(hour, minute)
 end)
 
 RegisterNetEvent('qb-weathersync:server:toggleBlackout', function(state)
-    local src = source
+    local src = getSource(source)
     if isAllowedToChange(src) then
         local newstate = setBlackout(state)
         if src > 0 then
@@ -167,7 +177,7 @@ RegisterNetEvent('qb-weathersync:server:toggleBlackout', function(state)
 end)
 
 RegisterNetEvent('qb-weathersync:server:toggleFreezeTime', function(state)
-    local src = source
+    local src = getSource(source)
     if isAllowedToChange(src) then
         local newstate = setTimeFreeze(state)
         if src > 0 then
@@ -179,7 +189,7 @@ RegisterNetEvent('qb-weathersync:server:toggleFreezeTime', function(state)
 end)
 
 RegisterNetEvent('qb-weathersync:server:toggleDynamicWeather', function(state)
-    local src = source
+    local src = getSource(source)
     if isAllowedToChange(src) then
         local newstate = setDynamicWeather(state)
         if src > 0 then
