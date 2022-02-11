@@ -232,7 +232,7 @@ RegisterCommand('weather', function(source, args, rawCommand)
         if (success) then return print(Lang:t('weather.updated')) end
         return print(Lang:t('weather.invalid'))
     else
-        TriggerClientEvent('QBCore:Notify', Lang:t('error.not_access'), 'error')
+        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_access'), 'error')
     end
 end)
 
