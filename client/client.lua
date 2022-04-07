@@ -113,6 +113,7 @@ CreateThread(function()
             end
             if freezeTime then
                 timeOffset = timeOffset + baseTime - newBaseTime
+                second = 0
             end
             baseTime = newBaseTime
             hour = math.floor(((baseTime+timeOffset)/60)%24)
