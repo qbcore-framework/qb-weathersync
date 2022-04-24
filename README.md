@@ -61,6 +61,8 @@ to adjust weather patterns you need to modify nextWeatherStage() in `server/serv
 
 `/time [hour] (minute)` - Set time to whatever you want
 
+`/resettime` - Resets time to real time
+
 ## Exports
 
 ### nextWeatherStage
@@ -96,6 +98,18 @@ local success = exports["qb-weathersync"]:setTime(8, 10); -- 8:10 AM
 ```js
 // JAVASCRIPT EXAMPLE
 const success = global.exports["qb-weathersync"].setTime(15, 30); // 3:30PM
+```
+
+
+### resetTime
+Resets sun position based on real time
+```lua
+-- LUA EXAMPLE
+local success = exports["qb-weathersync"]:resetTime();
+```
+```js
+// JAVASCRIPT EXAMPLE
+const success = global.exports["qb-weathersync"].resetTime();
 ```
 
 
@@ -191,6 +205,8 @@ const state = global.exports["qb-weathersync"].getDynamicWeather();
 `qb-weathersync:server:setWeather` [type] - Set Weather type (List in Config)
 
 `qb-weathersync:server:setTime` [hour] (minute) - Set simulated time
+
+`qb-weathersync:server:resetTime` - Resets time to the current server OS real time
 
 `qb-weathersync:server:toggleBlackout` (true|false) - Enable, disable or toggle blackout
 

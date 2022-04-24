@@ -46,6 +46,7 @@ local Translations = {
         timemname = 'minutos',
         timeh = 'Um número entre 0 - 23',
         timem = 'Um número entre 0 - 59',
+        resettimecommand = 'Reinicia o tempo em tempo real',
         freezecommand = 'Congelar / Descongelar o tempo.',
         freezeweathercommand = 'Ativar/Desativar as alterações dinâmicas de clima.',
         morningcommand = 'Definir o tempo para 09:00',

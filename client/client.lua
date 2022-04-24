@@ -19,17 +19,17 @@ RegisterNetEvent('qb-weathersync:client:EnableSync', function()
 end)
 
 RegisterNetEvent('qb-weathersync:client:DisableSync', function()
-	disable = true
-	CreateThread(function()
-		while disable do
-			SetRainLevel(0.0)
-			SetWeatherTypePersist('CLEAR')
-			SetWeatherTypeNow('CLEAR')
-			SetWeatherTypeNowPersist('CLEAR')
-			NetworkOverrideClockTime(18, 0, 0)
-			Wait(5000)
-		end
-	end)
+    disable = true
+    CreateThread(function()
+        while disable do
+            SetRainLevel(0.0)
+            SetWeatherTypePersist('CLEAR')
+            SetWeatherTypeNow('CLEAR')
+            SetWeatherTypeNowPersist('CLEAR')
+            NetworkOverrideClockTime(18, 0, 0)
+            Wait(5000)
+        end
+    end)
 end)
 
 RegisterNetEvent('qb-weathersync:client:SyncWeather', function(NewWeather, newblackout)
@@ -51,7 +51,7 @@ CreateThread(function()
                 SetWeatherTypeOverTime(CurrentWeather, 15.0)
                 Wait(15000)
             end
-            Wait(100) -- Wait 0 seconds to prevent crashing.
+            Wait(0)-- Wait 0 seconds to prevent crashing.
             SetArtificialLightsState(blackout)
             SetArtificialLightsStateAffectsVehicles(blackoutVehicle)
             ClearOverrideWeather()
@@ -82,26 +82,22 @@ end)
 CreateThread(function()
     local hour = 0
     local minute = 0
-    local second = 0        --Add seconds for shadow smoothness
+    local second = 0 --Add seconds for shadow smoothness
     while true do
         if not disable then
             Wait(0)
-            local newBaseTime = baseTime
-            if GetGameTimer() - 22  > timer then    --Generate seconds in client side to avoid communiation
-                second = second + 1                 --Minutes are sent from the server every 2 seconds to keep sync
+            if GetGameTimer() - 22 > timer then --Generate seconds in client side to avoid communiation
+                second = second + 1 --Minutes are sent from the server every 2 seconds to keep sync
                 timer = GetGameTimer()
             end
-            if freezeTime then
-                timeOffset = timeOffset + baseTime - newBaseTime
+            
+            hour = math.floor(((baseTime + timeOffset + Config.GMTOffset) / 3600) % 24)
+            local newMinute = math.floor(((baseTime + timeOffset) / 60) % 60)
+            if minute ~= newMinute then --Reset seconds to 0 when new minute
+                minute = newMinute
                 second = 0
             end
-            baseTime = newBaseTime
-            hour = math.floor(((baseTime+timeOffset)/60)%24)
-            if minute ~= math.floor((baseTime+timeOffset)%60) then  --Reset seconds to 0 when new minute
-                minute = math.floor((baseTime+timeOffset)%60)
-                second = 0
-            end
-            NetworkOverrideClockTime(hour, minute, second)          --Send hour included seconds to network clock time
+            NetworkOverrideClockTime(hour, minute, second)--Send hour included seconds to network clock time
         else
             Wait(1000)
         end

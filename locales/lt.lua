@@ -44,6 +44,7 @@ local Translations = {
         timemname = 'minut?s',
         timeh = 'Skai?ius tarp 0 - 23',
         timem = 'Skai?ius tarp 0 - 59',
+        resettimecommand = 'Laiko nustatymas iš naujo į realųjį laiką',
         freezecommand = 'Laiko sustabdymas.',
         freezeweathercommand = 'Or? keitimosi nustatymas.',
         morningcommand = 'Laikas nustatytas ? 09:00',

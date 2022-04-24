@@ -44,6 +44,7 @@ local Translations = {
         timemname = 'minutes',
         timeh = 'Un nombre entre 0 - 23',
         timem = 'Un nombre entre 0 - 59',
+        resettimecommand = "Remise à l'heure réelle",
         freezecommand = 'gèle / dégèle le temps.',
         freezeweathercommand = 'Active/désactive le changement de temps dynamique.',
         morningcommand = 'Met le temps à 09:00',

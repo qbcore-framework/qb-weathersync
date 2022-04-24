@@ -46,6 +46,7 @@ local Translations = {
         timemname = 'minutter',
         timeh = 'Et nummer mellem 0 - 23',
         timem = 'Et nummer mellem 0 - 59',
+        resettimecommand = 'Nulstiller tiden til realtid',
         freezecommand = 'Stop / kør tiden.',
         freezeweathercommand = 'Slå til/fra dynamiske vejr ændringer.',
         morningcommand = 'Sæt tiden til 09:00',

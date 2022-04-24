@@ -11,6 +11,8 @@ Config.BlackoutVehicle  = false -- Set blackout affects vehicles                
 Config.NewWeatherTimer  = 10 -- Time (in minutes) between each weather change   default: 10
 Config.Disabled         = false -- Set weather disabled                         default: false
 
+Config.GMT = 2 -- Change this to your local time zone
+Config.GMTOffset = Config.GMT * 3600 -- DONT TOUCH!
 
 Config.AvailableWeatherTypes = { -- DON'T TOUCH EXCEPT IF YOU KNOW WHAT YOU ARE DOING
     'EXTRASUNNY',

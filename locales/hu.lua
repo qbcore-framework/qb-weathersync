@@ -44,6 +44,7 @@ local Translations = {
         timemname = 'perc',
         timeh = 'Egy szám 0 - 23 között',
         timem = 'Egy szám 0 - 59 között',
+        resettimecommand = 'Visszaállítja az időt valós időre',
         freezecommand = 'Id? leállít/elindít.',
         freezeweathercommand = 'Be/Kikapcsolása a Dinamikus id?járás változásoknak',
         morningcommand = 'Id? megváltoztatva: 09:00',

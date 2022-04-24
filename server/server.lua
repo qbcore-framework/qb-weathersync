@@ -29,13 +29,16 @@ end
 --- Sets time offset based on minutes provided
 --- @param minute number - Minutes to offset by
 local function shiftToMinute(minute)
-    timeOffset = timeOffset - (((baseTime + timeOffset) % 60) - minute)
+    local offsetDelta = math.floor(((baseTime + timeOffset) / 60) % 60) - minute
+    timeOffset = timeOffset - (offsetDelta * 60)
 end
 
 --- Sets time offset based on hour provided
 --- @param hour number - Hour to offset by
 local function shiftToHour(hour)
-    timeOffset = timeOffset - ((((baseTime + timeOffset) / 60) % 24) - hour) * 60
+    -- As we are calculating in the real time we have to take GMTOffset into account
+    local offsetDelta = math.floor(((baseTime + timeOffset + Config.GMTOffset) / 3600) % 24) - hour
+    timeOffset = timeOffset - (offsetDelta * 3600)
 end
 
 --- Triggers event to switch weather to next stage
@@ -91,6 +94,12 @@ local function setTime(hour, minute)
     print(Lang:t('time.change', {value = argh, value2 = argm}))
     TriggerEvent('qb-weathersync:server:RequestStateSync')
     return true
+end
+
+--- Resets time to the current server OS real time
+local function resetTime()
+    timeOffset = 0
+    TriggerEvent('qb-weathersync:server:RequestStateSync')
 end
 
 --- Sets or toggles blackout state and returns the state
@@ -253,7 +262,7 @@ QBCore.Commands.Add('night', Lang:t('help.nightcommand'), {}, false, function(so
     if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.night')) end
 end, 'admin')
 
-QBCore.Commands.Add('time', Lang:t('help.timecommand'), {{ name=Lang:t('help.timehname'), help=Lang:t('help.timeh') }, { name=Lang:t('help.timemname'), help=Lang:t('help.timem') }}, true, function(source, args)
+QBCore.Commands.Add('time', Lang:t('help.timecommand'), {{name = Lang:t('help.timehname'), help = Lang:t('help.timeh')}, {name = Lang:t('help.timemname'), help = Lang:t('help.timem')}}, true, function(source, args)
     local success = setTime(args[1], args[2])
     if source > 0 then
         if (success) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.changec', {value = args[1] .. ':' .. (args[2] or "00")})) end
@@ -263,12 +272,16 @@ QBCore.Commands.Add('time', Lang:t('help.timecommand'), {{ name=Lang:t('help.tim
     return print(Lang:t('time.invalid'))
 end, 'admin')
 
+QBCore.Commands.Add('resettime', Lang:t('help.resettimecommand'), {}, false, function(source, args)
+    resetTime()
+end, 'admin')
+
 -- THREAD LOOPS
 CreateThread(function()
     local previous = 0
     while true do
         Wait(0)
-        local newBaseTime = os.time(os.date("!*t")) / 2 + 360 --Set the server time depending of OS time
+        local newBaseTime = os.time()--Set the server time depending of OS time
         if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
             previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
             if freezeTime then
@@ -310,6 +323,7 @@ end)
 exports('nextWeatherStage', nextWeatherStage)
 exports('setWeather', setWeather)
 exports('setTime', setTime)
+exports('resetTime', resetTime)
 exports('setBlackout', setBlackout)
 exports('setTimeFreeze', setTimeFreeze)
 exports('setDynamicWeather', setDynamicWeather)
