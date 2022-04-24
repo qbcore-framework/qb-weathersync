@@ -52,10 +52,6 @@ local Translations = {
         nightcommand = 'Id? megváltoztatva: 23:00',
         blackoutcommand = 'Áramszünet mód ki/be kapcsolása.',
     },
-    error = {
-        not_access = 'Nincs jogosultságod a parancs használatára.',
-        not_allowed = 'Nincs jogosultságod a parancs használatára.',
-    }
 }
 
     Lang = Locale:new({

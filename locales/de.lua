@@ -52,10 +52,6 @@ local Translations = {
         nightcommand = 'Uhrzeit auf 23:00 Uhr einstellen',
         blackoutcommand = 'Blackoutmodus ein- und ausschalten.',
     },
-    error = {
-        not_access = 'Du hast keinen Zugriff auf diesen Befehl.',
-        not_allowed = 'Du bist nicht berechtigt, diesen Befehl zu verwenden.',
-    }
 }
 
     Lang = Locale:new({

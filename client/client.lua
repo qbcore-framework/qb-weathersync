@@ -11,7 +11,6 @@ local disable = Config.Disabled
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     disable = false
     TriggerServerEvent('qb-weathersync:server:RequestStateSync')
-    TriggerServerEvent('qb-weathersync:server:RequestCommands')
 end)
 
 RegisterNetEvent('qb-weathersync:client:EnableSync', function()
@@ -36,25 +35,6 @@ end)
 RegisterNetEvent('qb-weathersync:client:SyncWeather', function(NewWeather, newblackout)
     CurrentWeather = NewWeather
     blackout = newblackout
-end)
-
-RegisterNetEvent('qb-weathersync:client:RequestCommands', function(isAllowed)
-    if isAllowed then
-        TriggerEvent('chat:addSuggestion', '/freezetime', Lang:t('help.freezecommand'), {})
-        TriggerEvent('chat:addSuggestion', '/freezeweather', Lang:t('help.freezeweathercommand'), {})
-        TriggerEvent('chat:addSuggestion', '/weather', Lang:t('help.weathercommand'), {
-            { name=Lang:t('help.weathertype'), help=Lang:t('help.availableweather') }
-        })
-        TriggerEvent('chat:addSuggestion', '/blackout', Lang:t('help.blackoutcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/morning', Lang:t('help.morningcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/noon', Lang:t('help.nooncommand'), {})
-        TriggerEvent('chat:addSuggestion', '/evening', Lang:t('help.eveningcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/night', Lang:t('help.nightcommand'), {})
-        TriggerEvent('chat:addSuggestion', '/time', Lang:t('help.timecommand'), {
-            { name=Lang:t('help.timehname'), help=Lang:t('help.timeh') },
-            { name=Lang:t('help.timemname'), help=Lang:t('help.timem') }
-        })
-    end
 end)
 
 RegisterNetEvent('qb-weathersync:client:SyncTime', function(base, offset, freeze)

@@ -54,10 +54,6 @@ local Translations = {
         nightcommand = 'Definir o tempo para 23:00',
         blackoutcommand = 'Ativar/Desativar apagão.',
     },
-    error = {
-        not_access = 'Não tens acesso a este comando.',
-        not_allowed = 'Não tens permissão para usar este comando.',
-    }
 }
 
     Lang = Locale:new({

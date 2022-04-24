@@ -188,8 +188,6 @@ const state = global.exports["qb-weathersync"].getDynamicWeather();
 
 `qb-weathersync:server:RequestStateSync` - Sync time and weather for everyone
 
-`qb-weathersync:server:RequestCommands` - Check if permission avaiable for client
-
 `qb-weathersync:server:setWeather` [type] - Set Weather type (List in Config)
 
 `qb-weathersync:server:setTime` [hour] (minute) - Set simulated time
