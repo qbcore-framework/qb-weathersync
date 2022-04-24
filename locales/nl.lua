@@ -52,10 +52,6 @@ local Translations = {
         nightcommand = 'Zet de tijd op 23:00',
         blackoutcommand = 'Schakel de black-outmodus.',
     },
-    error = {
-        not_access = 'Je hebt geen toegang tot die commando.',
-        not_allowed = 'Je mag dit commando niet gebruiken.',
-    }
 }
 
     Lang = Locale:new({

@@ -52,10 +52,6 @@ local Translations = {
         nightcommand = 'Saati 23:00\'e ayarla',
         blackoutcommand = 'Karartma modunu aç/kapat.',
     },
-    error = {
-        not_access = 'Bu komuta erişiminiz yok.',
-        not_allowed = 'Bu komutu kullanma izniniz yok.',
-    }
 }
 
     Lang = Locale:new({
