@@ -331,10 +331,21 @@ CreateThread(function()
     end
 end)
 
+local count = 0
+local TimeSlower = 0 -- Slow Time ingame. Maths: (TimeSlower * 2) Realtime second = 1 minute ingame time   default = 0
+
 CreateThread(function()
     while true do
         Wait(2000)                                          --Change to send every minute in game sync
-        TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
+        if count >= TimeSlower then
+            TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
+            setTimeFreeze(false)
+            count = 0
+        else
+            TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
+            setTimeFreeze(true)
+            count = count + 1
+        end
     end
 end)
 
