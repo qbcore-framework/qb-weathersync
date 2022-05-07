@@ -44,6 +44,7 @@ local Translations = {
         timemname = 'Minuten',
         timeh = 'Eine Zahl zwischen 0 - 23',
         timem = 'Eine Zahl zwischen 0 - 59',
+        resettimecommand = 'Setzt die Zeit auf Echtzeit zurück',
         freezecommand = 'Uhrzeit Einfrieren/Auftauen.',
         freezeweathercommand = 'Aktivieren/Deaktivieren der dynamischen Wetteränderungen.',
         morningcommand = 'Uhrzeit auf 09:00 Uhr einstellen',
@@ -52,10 +53,6 @@ local Translations = {
         nightcommand = 'Uhrzeit auf 23:00 Uhr einstellen',
         blackoutcommand = 'Blackoutmodus ein- und ausschalten.',
     },
-    error = {
-        not_access = 'Du hast keinen Zugriff auf diesen Befehl.',
-        not_allowed = 'Du bist nicht berechtigt, diesen Befehl zu verwenden.',
-    }
 }
 
     Lang = Locale:new({

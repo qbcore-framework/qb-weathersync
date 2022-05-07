@@ -46,6 +46,7 @@ local Translations = {
         timemname = 'minuti',
         timeh = 'Un numero tra 0 - 23',
         timem = 'Un numero tra 0 - 59',
+        resettimecommand = 'Riporta il tempo al tempo reale',
         freezecommand = 'Congela / scongela tempo.',
         freezeweathercommand = 'Abilita/disabilita le modifiche meteo dinamiche.',
         morningcommand = 'Imposta l\'ora a 09:00',
@@ -54,10 +55,6 @@ local Translations = {
         nightcommand = 'Imposta l\'ora a  23:00',
         blackoutcommand = 'Attiva/disattiva la modalità blackout.',
     },
-    error = {
-        not_access = 'Non hai accesso a quel comando.',
-        not_allowed = 'Non ti è permesso usare questo comando.',
-    }
 }
 
     Lang = Locale:new({

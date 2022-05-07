@@ -44,6 +44,7 @@ local Translations = {
         timemname = 'minuten',
         timeh = 'Een getal tussen 0 - 23',
         timem = 'Een getal tussen 0 - 59',
+        resettimecommand = 'Zet de tijd terug naar real time',
         freezecommand = 'Tijd bevriezen / ontdooien.',
         freezeweathercommand = 'Dynamische weersveranderingen in-/uitschakelen.',
         morningcommand = 'Zet de tijd op 09:00',
@@ -52,10 +53,6 @@ local Translations = {
         nightcommand = 'Zet de tijd op 23:00',
         blackoutcommand = 'Schakel de black-outmodus.',
     },
-    error = {
-        not_access = 'Je hebt geen toegang tot die commando.',
-        not_allowed = 'Je mag dit commando niet gebruiken.',
-    }
 }
 
     Lang = Locale:new({

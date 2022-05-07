@@ -44,6 +44,7 @@ local Translations = {
         timemname = 'minut?s',
         timeh = 'Skai?ius tarp 0 - 23',
         timem = 'Skai?ius tarp 0 - 59',
+        resettimecommand = 'Laiko nustatymas iš naujo į realųjį laiką',
         freezecommand = 'Laiko sustabdymas.',
         freezeweathercommand = 'Or? keitimosi nustatymas.',
         morningcommand = 'Laikas nustatytas ? 09:00',
@@ -52,10 +53,6 @@ local Translations = {
         nightcommand = 'Laikas nustatytas ? 23:00',
         blackoutcommand = 'Užtemimo nustatymas.',
     },
-    error = {
-        not_access = 'J?s neturite leidimo šiai komandai.',
-        not_allowed = 'Jums neleidžiama naudoti šios komandos.',
-    }
 }
 
     Lang = Locale:new({

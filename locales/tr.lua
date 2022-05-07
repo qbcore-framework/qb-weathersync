@@ -44,6 +44,7 @@ local Translations = {
         timemname = 'dakika',
         timeh = '0 - 23 arasında bir sayı',
         timem = '0 - 59 arasında bir sayı',
+        resettimecommand = 'Zamanı gerçek zamana sıfırlar',
         freezecommand = 'Zamanı dondur / çöz.',
         freezeweathercommand = 'Dinamik hava durumu değişikliklerini etkinleştir/devre dışı bırak.',
         morningcommand = 'Saati 09:00\'a ayarlayın',
@@ -52,10 +53,6 @@ local Translations = {
         nightcommand = 'Saati 23:00\'e ayarla',
         blackoutcommand = 'Karartma modunu aç/kapat.',
     },
-    error = {
-        not_access = 'Bu komuta erişiminiz yok.',
-        not_allowed = 'Bu komutu kullanma izniniz yok.',
-    }
 }
 
     Lang = Locale:new({
