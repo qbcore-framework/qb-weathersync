@@ -100,7 +100,7 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    local hour = 0
+    local hour
     local minute = 0
     local second = 0        --Add seconds for shadow smoothness
     while true do
