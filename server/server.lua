@@ -202,7 +202,7 @@ end)
 
 -- COMMANDS
 
-RegisterCommand('freezetime', function(source, _, _)
+RegisterCommand('freezetime', function(source)
     if isAllowedToChange(source) then
         local newstate = setTimeFreeze()
         if source > 0 then
