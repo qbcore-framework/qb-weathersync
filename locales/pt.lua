@@ -9,7 +9,7 @@ local Translations = {
         invalidc = 'Tipo de clima inválido, os tipos de clima válidos são: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
         willchangeto = 'Clima alterado para: %{value}.',
         accessdenied = 'Acesso do comando /weather negado.',
-    },      
+    },
 
     dynamic_weather = {
         disabled = 'Alterações de clima dinâmico desativado.',
@@ -30,7 +30,7 @@ local Translations = {
         invalid = 'Sintaxe inválida, a sintaxe correta é: time <hora> <minuto>!',
         invalidc = 'Sintaxe inválida. Usa /time <hora> <minuto>!',
         access = 'Acesso do comando /time negado.',
-    },    
+    },
     blackout = {
         enabled = 'Apagão está agora activado.',
         enabledc = 'Apagão está agora activado.',
@@ -63,4 +63,4 @@ local Translations = {
     Lang = Locale:new({
         phrases = Translations,
         warnOnMissing = true
-    })    
+    })

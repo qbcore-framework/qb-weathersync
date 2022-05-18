@@ -11,7 +11,7 @@ local newWeatherTimer = Config.NewWeatherTimer
 --- @return int - source
 local function getSource(src)
     if src == '' then
-        return 0 
+        return 0
     end
     return src
 end
@@ -202,7 +202,7 @@ end)
 
 -- COMMANDS
 
-RegisterCommand('freezetime', function(source, args, rawCommand)
+RegisterCommand('freezetime', function(source)
     if isAllowedToChange(source) then
         local newstate = setTimeFreeze()
         if source > 0 then
@@ -215,7 +215,7 @@ RegisterCommand('freezetime', function(source, args, rawCommand)
     TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
 end)
 
-RegisterCommand('freezeweather', function(source, args, rawCommand)
+RegisterCommand('freezeweather', function(source)
     if isAllowedToChange(source) then
         local newstate = setDynamicWeather()
         if source > 0 then
@@ -228,7 +228,7 @@ RegisterCommand('freezeweather', function(source, args, rawCommand)
     TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
 end)
 
-RegisterCommand('weather', function(source, args, rawCommand)
+RegisterCommand('weather', function(source, args)
     if isAllowedToChange(source) then
         if args[1] == nil then
             if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.invalid_syntaxc'), 'error') end
@@ -246,7 +246,7 @@ RegisterCommand('weather', function(source, args, rawCommand)
     end
 end)
 
-RegisterCommand('blackout', function(source, args, rawCommand)
+RegisterCommand('blackout', function(source)
     local src = source
     if isAllowedToChange(src) then
         local newstate = setBlackout()
@@ -260,7 +260,7 @@ RegisterCommand('blackout', function(source, args, rawCommand)
     TriggerClientEvent('QBCore:Notify', src, Lang:t('error.not_allowed'), 'error')
 end)
 
-RegisterCommand('morning', function(source, args, rawCommand)
+RegisterCommand('morning', function(source)
     if isAllowedToChange(source) then
         setTime(9, 0)
         if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.morning')) end
@@ -269,7 +269,7 @@ RegisterCommand('morning', function(source, args, rawCommand)
     end
 end)
 
-RegisterCommand('noon', function(source, args, rawCommand)
+RegisterCommand('noon', function(source)
     if isAllowedToChange(source) then
         setTime(12, 0)
         if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.noon')) end
@@ -278,7 +278,7 @@ RegisterCommand('noon', function(source, args, rawCommand)
     end
 end)
 
-RegisterCommand('evening', function(source, args, rawCommand)
+RegisterCommand('evening', function(source)
     if isAllowedToChange(source) then
         setTime(18, 0)
         if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.evening')) end
@@ -287,7 +287,7 @@ RegisterCommand('evening', function(source, args, rawCommand)
     end
 end)
 
-RegisterCommand('night', function(source, args, rawCommand)
+RegisterCommand('night', function(source)
     if isAllowedToChange(source) then
         setTime(23, 0)
         if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.night')) end
@@ -296,7 +296,7 @@ RegisterCommand('night', function(source, args, rawCommand)
     end
 end)
 
-RegisterCommand('time', function(source, args, rawCommand)
+RegisterCommand('time', function(source, args)
     if isAllowedToChange(source) then
         if args[1] == nil then
             if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.invalidc'), 'error') end

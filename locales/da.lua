@@ -9,7 +9,7 @@ local Translations = {
         invalidc = 'Ugyldig vejrtype, typer du kan bruge er: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
         willchangeto = 'Vejret vil ændre sig til: %{value}.',
         accessdenied = 'Adgangen til /weather er nægtet.',
-    },      
+    },
 
     dynamic_weather = {
         disabled = 'Dynamisk vejr er slået fra.',
@@ -30,7 +30,7 @@ local Translations = {
         invalid = 'Ugyldig syntax, korrekt syntax er: time <time> <minut> !',
         invalidc = 'Ugyldig syntax. Brug /time <time> <minut> istedet!',
         access = 'Adgangen for command /time er nægtet.',
-    },    
+    },
     blackout = {
         enabled = 'Blackout er nu slået til.',
         enabledc = 'Blackout er nu slået til.',
@@ -63,4 +63,4 @@ local Translations = {
     Lang = Locale:new({
         phrases = Translations,
         warnOnMissing = true
-    })    
+    })
