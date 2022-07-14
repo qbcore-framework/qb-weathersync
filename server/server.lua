@@ -29,21 +29,21 @@ end
 --- Sets time offset based on minutes provided
 --- @param minute number - Minutes to offset by
 local function shiftToMinute(minute)
-    timeOffset = timeOffset - ( ( (baseTime+timeOffset) % 60 ) - minute )
+    timeOffset = timeOffset - (((baseTime + timeOffset) % 60) - minute)
 end
 
 --- Sets time offset based on hour provided
 --- @param hour number - Hour to offset by
 local function shiftToHour(hour)
-    timeOffset = timeOffset - ( ( ((baseTime+timeOffset)/60) % 24 ) - hour ) * 60
+    timeOffset = timeOffset - ((((baseTime + timeOffset) / 60) % 24) - hour) * 60
 end
 
 --- Triggers event to switch weather to next stage
 local function nextWeatherStage()
-    if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY"  then
-        CurrentWeather = (math.random(1,5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
+    if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY" then
+        CurrentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
     elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
-        local new = math.random(1,6)
+        local new = math.random(1, 6)
         if new == 1 then CurrentWeather = (CurrentWeather == "CLEARING") and "FOGGY" or "RAIN"
         elseif new == 2 then CurrentWeather = "CLOUDS"
         elseif new == 3 then CurrentWeather = "CLEAR"
@@ -63,7 +63,7 @@ end
 --- @return boolean - success
 local function setWeather(weather)
     local validWeatherType = false
-    for _,weatherType in pairs(Config.AvailableWeatherTypes) do
+    for _, weatherType in pairs(Config.AvailableWeatherTypes) do
         if weatherType == string.upper(weather) then
             validWeatherType = true
         end
@@ -127,17 +127,9 @@ local function setDynamicWeather(state)
 end
 
 -- EVENTS
-
 RegisterNetEvent('qb-weathersync:server:RequestStateSync', function()
     TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, CurrentWeather, blackout)
     TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
-end)
-
-RegisterNetEvent('qb-weathersync:server:RequestCommands', function()
-    local src = source
-    if isAllowedToChange(src) then
-        TriggerClientEvent('qb-weathersync:client:RequestCommands', src, true)
-    end
 end)
 
 RegisterNetEvent('qb-weathersync:server:setWeather', function(weather)
@@ -201,128 +193,84 @@ RegisterNetEvent('qb-weathersync:server:toggleDynamicWeather', function(state)
 end)
 
 -- COMMANDS
-
-RegisterCommand('freezetime', function(source)
-    if isAllowedToChange(source) then
-        local newstate = setTimeFreeze()
-        if source > 0 then
-            if (newstate) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.frozenc')) end
-            return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.unfrozenc'))
-        end
-        if (newstate) then return print(Lang:t('time.now_frozen')) end
-        return print(Lang:t('time.now_unfrozen'))
+QBCore.Commands.Add('freezetime', Lang:t('help.freezecommand'), {}, false, function(source)
+    local newstate = setTimeFreeze()
+    if source > 0 then
+        if (newstate) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.frozenc')) end
+        return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.unfrozenc'))
     end
-    TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
-end)
+    if (newstate) then return print(Lang:t('time.now_frozen')) end
+    return print(Lang:t('time.now_unfrozen'))
+end, 'admin')
 
-RegisterCommand('freezeweather', function(source)
-    if isAllowedToChange(source) then
-        local newstate = setDynamicWeather()
-        if source > 0 then
-            if (newstate) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('dynamic_weather.enabled')) end
-            return TriggerClientEvent('QBCore:Notify', source, Lang:t('dynamic_weather.disabled'))
-        end
-        if (newstate) then return print(Lang:t('weather.now_unfrozen')) end
-        return print(Lang:t('weather.now_frozen'))
+QBCore.Commands.Add('freezeweather', Lang:t('help.freezeweathercommand'), {}, false, function(source)
+    local newstate = setDynamicWeather()
+    if source > 0 then
+        if (newstate) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('dynamic_weather.enabled')) end
+        return TriggerClientEvent('QBCore:Notify', source, Lang:t('dynamic_weather.disabled'))
     end
-    TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
-end)
+    if (newstate) then return print(Lang:t('weather.now_unfrozen')) end
+    return print(Lang:t('weather.now_frozen'))
+end, 'admin')
 
-RegisterCommand('weather', function(source, args)
-    if isAllowedToChange(source) then
-        if args[1] == nil then
-            if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.invalid_syntaxc'), 'error') end
-            return print(Lang:t('weather.invalid_syntax'))
-        end
-        local success = setWeather(args[1])
-        if source > 0 then
-            if (success) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.willchangeto', {value = string.lower(args[1])})) end
-            return TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.invalidc'), 'error')
-        end
-        if (success) then return print(Lang:t('weather.updated')) end
-        return print(Lang:t('weather.invalid'))
-    else
-        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_access'), 'error')
+QBCore.Commands.Add('weather', Lang:t('help.weathercommand'), {{name = Lang:t('help.weathertype'), help = Lang:t('help.availableweather')}}, true, function(source, args)
+    local success = setWeather(args[1])
+    if source > 0 then
+        if (success) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.willchangeto', {value = string.lower(args[1])})) end
+        return TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.invalidc'), 'error')
     end
-end)
+    if (success) then return print(Lang:t('weather.updated')) end
+    return print(Lang:t('weather.invalid'))
+end, 'admin')
 
-RegisterCommand('blackout', function(source)
-    local src = source
-    if isAllowedToChange(src) then
-        local newstate = setBlackout()
-        if src > 0 then
-            if (newstate) then return TriggerClientEvent('QBCore:Notify', src, Lang:t('blackout.enabledc')) end
-            return TriggerClientEvent('QBCore:Notify', src, Lang:t('blackout.disabledc'))
-        end
-        if (newstate) then return print(Lang:t('blackout.enabled')) end
-        return print(Lang:t('blackout.disabled'))
+QBCore.Commands.Add('blackout', Lang:t('help.blackoutcommand'), {}, false, function(source)
+    local newstate = setBlackout()
+    if source > 0 then
+        if (newstate) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('blackout.enabledc')) end
+        return TriggerClientEvent('QBCore:Notify', source, Lang:t('blackout.disabledc'))
     end
-    TriggerClientEvent('QBCore:Notify', src, Lang:t('error.not_allowed'), 'error')
-end)
+    if (newstate) then return print(Lang:t('blackout.enabled')) end
+    return print(Lang:t('blackout.disabled'))
+end, 'admin')
 
-RegisterCommand('morning', function(source)
-    if isAllowedToChange(source) then
-        setTime(9, 0)
-        if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.morning')) end
-    else
-        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
-    end
-end)
+QBCore.Commands.Add('morning', Lang:t('help.morningcommand'), {}, false, function(source)
+    setTime(9, 0)
+    if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.morning')) end
+end, 'admin')
 
-RegisterCommand('noon', function(source)
-    if isAllowedToChange(source) then
-        setTime(12, 0)
-        if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.noon')) end
-    else
-        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
-    end
-end)
+QBCore.Commands.Add('noon', Lang:t('help.nooncommand'), {}, false, function(source)
+    setTime(12, 0)
+    if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.noon')) end
+end, 'admin')
 
-RegisterCommand('evening', function(source)
-    if isAllowedToChange(source) then
-        setTime(18, 0)
-        if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.evening')) end
-    else
-        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
-    end
-end)
+QBCore.Commands.Add('evening', Lang:t('help.eveningcommand'), {}, false, function(source)
+    setTime(18, 0)
+    if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.evening')) end
+end, 'admin')
 
-RegisterCommand('night', function(source)
-    if isAllowedToChange(source) then
-        setTime(23, 0)
-        if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.night')) end
-    else
-        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_allowed'), 'error')
-    end
-end)
+QBCore.Commands.Add('night', Lang:t('help.nightcommand'), {}, false, function(source)
+    setTime(23, 0)
+    if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.night')) end
+end, 'admin')
 
-RegisterCommand('time', function(source, args)
-    if isAllowedToChange(source) then
-        if args[1] == nil then
-            if source > 0 then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.invalidc'), 'error') end
-            return print(Lang:t('time.invalid'))
-        end
-        local success = setTime(args[1], args[2])
-        if source > 0 then
-            if (success) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.changec', {value = args[1]..':'..(args[2] or "00")})) end
-            return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.invalidc'), 'error')
-        end
-        if (success) then return print(Lang:t('time.change', {value = args[1], value2 = args[2] or "00"})) end
-        return print(Lang:t('time.invalid'))
-    else
-        TriggerClientEvent('QBCore:Notify', source, Lang:t('time.access'), 'error')
+QBCore.Commands.Add('time', Lang:t('help.timecommand'), {{ name=Lang:t('help.timehname'), help=Lang:t('help.timeh') }, { name=Lang:t('help.timemname'), help=Lang:t('help.timem') }}, true, function(source, args)
+    local success = setTime(args[1], args[2])
+    if source > 0 then
+        if (success) then return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.changec', {value = args[1] .. ':' .. (args[2] or "00")})) end
+        return TriggerClientEvent('QBCore:Notify', source, Lang:t('time.invalidc'), 'error')
     end
-end)
+    if (success) then return print(Lang:t('time.change', {value = args[1], value2 = args[2] or "00"})) end
+    return print(Lang:t('time.invalid'))
+end, 'admin')
 
 -- THREAD LOOPS
-
 CreateThread(function()
     local previous = 0
     while true do
         Wait(0)
-        local newBaseTime = os.time(os.date("!*t"))/2 + 360         --Set the server time depending of OS time
-        if (newBaseTime % 60) ~= previous then                      --Check if a new minute is passed
-            previous = newBaseTime % 60                             --Only update time with plain minutes, seconds are handled in the client
+        local newBaseTime = os.time(os.date("!*t")) / 2 + 360 --Set the server time depending of OS time
+        if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
+            previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
             if freezeTime then
                 timeOffset = timeOffset + baseTime - newBaseTime
             end
@@ -333,7 +281,7 @@ end)
 
 CreateThread(function()
     while true do
-        Wait(2000)                                          --Change to send every minute in game sync
+        Wait(2000)--Change to send every minute in game sync
         TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
     end
 end)
@@ -359,7 +307,6 @@ CreateThread(function()
 end)
 
 -- EXPORTS
-
 exports('nextWeatherStage', nextWeatherStage)
 exports('setWeather', setWeather)
 exports('setTime', setTime)
@@ -370,4 +317,3 @@ exports('getBlackoutState', function() return blackout end)
 exports('getTimeFreezeState', function() return freezeTime end)
 exports('getWeatherState', function() return CurrentWeather end)
 exports('getDynamicWeather', function() return Config.DynamicWeather end)
-

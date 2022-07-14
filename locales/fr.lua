@@ -52,10 +52,6 @@ local Translations = {
         nightcommand = 'Met le temps à 23:00',
         blackoutcommand = 'Active la coupure électrique',
     },
-    error = {
-        not_access = "Erreur : Vous n'avez pas accès à cette commande.",
-        not_allowed = "Erreur : Vous n'avez pas accès à cette commande.",
-    }
 }
 
     Lang = Locale:new({
