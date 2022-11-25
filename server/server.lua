@@ -57,7 +57,6 @@ local function nextWeatherStage()
         elseif string.match(wWeather,"day") then
             extracted = string.match(string.match(wWeather, "(.*)?"), "day/(.*)")
         end
-        print(extracted)
         if extracted == "skc" or extracted == "wind_skc" then
             CurrentWeather = "CLEAR"
         elseif extracted == "few" or extracted == "sct" or extracted == "bkn" or extracted == "wind_few" or extracted == "wind_sct" or extracted == "wind_bkn" then
