@@ -40,20 +40,63 @@ end
 
 --- Triggers event to switch weather to next stage
 local function nextWeatherStage()
-    if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY" then
-        CurrentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
-    elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
-        local new = math.random(1, 6)
-        if new == 1 then CurrentWeather = (CurrentWeather == "CLEARING") and "FOGGY" or "RAIN"
-        elseif new == 2 then CurrentWeather = "CLOUDS"
-        elseif new == 3 then CurrentWeather = "CLEAR"
-        elseif new == 4 then CurrentWeather = "EXTRASUNNY"
-        elseif new == 5 then CurrentWeather = "SMOG"
-        else CurrentWeather = "FOGGY"
+    if Config.UseRealWeather then
+        local setupLink = "https://api.weather.gov/points/"..Config.Latitude..","..Config.Longitude
+        local wWeather
+        PerformHttpRequest(setupLink, function(err, rText, headers)
+            local temp = json.decode(rText)
+            PerformHttpRequest(temp["properties"]["forecastHourly"], function(err2, rText2, headers2)
+                local temp2 = json.decode(rText2)
+                wWeather = temp2["properties"]["periods"][1]["icon"]
+            end, "GET", "", {["Content-Type"] = "application/json"})
+        end, "GET", "", {["Content-Type"] = "application/json"})
+        Wait(1000)
+        local extracted
+        if string.match(wWeather,"night") then
+            extracted = string.match(string.match(wWeather, "(.*)?"), "night/(.*)")
+        elseif string.match(wWeather,"day") then
+            extracted = string.match(string.match(wWeather, "(.*)?"), "day/(.*)")
         end
-    elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then CurrentWeather = "CLEARING"
-    elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then CurrentWeather = "CLEAR"
-    else CurrentWeather = "CLEAR"
+        print(extracted)
+        if extracted == "skc" or extracted == "wind_skc" then
+            CurrentWeather = "CLEAR"
+        elseif extracted == "few" or extracted == "sct" or extracted == "bkn" or extracted == "wind_few" or extracted == "wind_sct" or extracted == "wind_bkn" then
+            CurrentWeather = "CLOUDS"
+        elseif extracted == "ovc" or extracted == "wind_ovc" then
+            CurrentWeather = "OVERCAST"
+        elseif extracted == "snow" or extracted == "snow_sleet" or extracted == "snow_fzra" or extracted == "cold" then
+            CurrentWeather = "SNOW"
+        elseif extracted == "sleet" or extracted == "rain_snow" or extracted == "rain_sleet" then
+            CurrentWeather = "SNOWLIGHT"
+        elseif extracted == "fzra" or extracted == "rain_fzra" or extracted == "rain" or extracted == "rain_showers" or extracted == "rain_showers_hi" then
+            CurrentWeather = "RAIN"
+        elseif extracted == "tsra" or extracted == "tsra_sct" or extracted == "tsra_hi" or extracted == "tornado" or extracted == "hurricane" or extracted == "tropical_storm" then
+            CurrentWeather = "THUNDER"
+        elseif extracted == "haze" then
+            CurrentWeather = "SMOG"
+        elseif extracted == "hot" then
+            CurrentWeather = "EXTRASUNNY"
+        elseif extracted == "blizzard" then
+            CurrentWeather = "BLIZZARD"
+        elseif extracted == "fog" then
+            CurrentWeather = "FOGGY"
+        end
+    else
+        if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY" then
+            CurrentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
+        elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
+            local new = math.random(1, 6)
+            if new == 1 then CurrentWeather = (CurrentWeather == "CLEARING") and "FOGGY" or "RAIN"
+            elseif new == 2 then CurrentWeather = "CLOUDS"
+            elseif new == 3 then CurrentWeather = "CLEAR"
+            elseif new == 4 then CurrentWeather = "EXTRASUNNY"
+            elseif new == 5 then CurrentWeather = "SMOG"
+            else CurrentWeather = "FOGGY"
+            end
+        elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then CurrentWeather = "CLEARING"
+        elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then CurrentWeather = "CLEAR"
+        else CurrentWeather = "CLEAR"
+        end
     end
     TriggerEvent("qb-weathersync:server:RequestStateSync")
 end
