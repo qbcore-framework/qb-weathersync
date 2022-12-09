@@ -48,7 +48,10 @@ local function nextWeatherStage()
                 print("Error code: " .. err)
             end
             local temp = json.decode(rText)
-            PerformHttpRequest(temp["properties"]["forecastHourly"], function(err2, rText2, headers2)
+            PerformHttpRequest(temp["properties"]["forecastHourly"], function(err2, rText2)
+                if err2 and err2 ~= 0 then
+                    print("Error code: " .. err2)
+                end
                 local temp2 = json.decode(rText2)
                 wWeather = temp2["properties"]["periods"][1]["icon"]
             end, "GET", "", {["Content-Type"] = "application/json"})
