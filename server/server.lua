@@ -43,7 +43,10 @@ local function nextWeatherStage()
     if Config.UseRealWeather then
         local setupLink = "https://api.weather.gov/points/"..Config.Latitude..","..Config.Longitude
         local wWeather
-        PerformHttpRequest(setupLink, function(err, rText, headers)
+        PerformHttpRequest(setupLink, function(err, rText)
+            if err and err ~= 0 then
+                print("Error code: " .. err)
+            end
             local temp = json.decode(rText)
             PerformHttpRequest(temp["properties"]["forecastHourly"], function(err2, rText2, headers2)
                 local temp2 = json.decode(rText2)
