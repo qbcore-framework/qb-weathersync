@@ -318,7 +318,7 @@ exports('getTimeFreezeState', function() return freezeTime end)
 exports('getWeatherState', function() return CurrentWeather end)
 exports('getDynamicWeather', function() return Config.DynamicWeather end)
 
-exports('getTime', function()        
+exports('getTime', function()
     local hour = math.floor(((baseTime+timeOffset)/60)%24)
     local minute = math.floor((baseTime+timeOffset)%60)
 
