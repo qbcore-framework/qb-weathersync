@@ -56,7 +56,7 @@ local function nextWeatherStage()
                 wWeather = temp2["properties"]["periods"][1]["icon"]
             end, "GET", "", {["Content-Type"] = "application/json"})
         end, "GET", "", {["Content-Type"] = "application/json"})
-        
+
         Wait(1000)
 
         local extracted
@@ -94,24 +94,24 @@ local function nextWeatherStage()
             CurrentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
         elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
             local new = math.random(1, 6)
-            if new == 1 then 
+            if new == 1 then
                 CurrentWeather = (CurrentWeather == "CLEARING") and "FOGGY" or "RAIN"
-            elseif new == 2 then 
+            elseif new == 2 then
                 CurrentWeather = "CLOUDS"
-            elseif new == 3 then 
+            elseif new == 3 then
                 CurrentWeather = "CLEAR"
-            elseif new == 4 then 
+            elseif new == 4 then
                 CurrentWeather = "EXTRASUNNY"
-            elseif new == 5 then 
+            elseif new == 5 then
                 CurrentWeather = "SMOG"
             else
                 CurrentWeather = "FOGGY"
             end
-        elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then 
+        elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then
             CurrentWeather = "CLEARING"
-        elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then 
+        elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then
             CurrentWeather = "CLEAR"
-        else 
+        else
             CurrentWeather = "CLEAR"
         end
     end
