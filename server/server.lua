@@ -322,8 +322,5 @@ exports('getTime', function()
     local hour = math.floor(((baseTime+timeOffset)/60)%24)
     local minute = math.floor((baseTime+timeOffset)%60)
 
-    return {
-        hour = hour,
-        minute = minute
-    }
+    return hour,minute
 end)
