@@ -42,53 +42,58 @@ end
 local function nextWeatherStage()
     if Config.UseRealWeather then
         local setupLink = "https://api.weather.gov/points/"..Config.Latitude..","..Config.Longitude
-        local wWeather
+
+        local prom = promise.new()
         PerformHttpRequest(setupLink, function(err, rText)
-            if err and err ~= 0 then
-                print("Error code: " .. err)
+            if err and err ~= 200 then
+                print("Request Error: " .. err)
             end
+            
             local temp = json.decode(rText)
             PerformHttpRequest(temp["properties"]["forecastHourly"], function(err2, rText2)
-                if err2 and err2 ~= 0 then
-                    print("Error code: " .. err2)
+                if err2 and err2 ~= 200 then
+                    prom:reject(err2)
+                else
+                    local temp2 = json.decode(rText2)
+                    prom:resolve(temp2["properties"]["periods"][1]["icon"])
                 end
-                local temp2 = json.decode(rText2)
-                wWeather = temp2["properties"]["periods"][1]["icon"]
             end, "GET", "", {["Content-Type"] = "application/json"})
         end, "GET", "", {["Content-Type"] = "application/json"})
 
-        Wait(1000)
-
-        local extracted
-        if string.match(wWeather,"night") then
-            extracted = string.match(string.match(wWeather, "(.*)?"), "night/(.*)")
-        elseif string.match(wWeather,"day") then
-            extracted = string.match(string.match(wWeather, "(.*)?"), "day/(.*)")
-        end
-
-        if extracted == "skc" or extracted == "wind_skc" then
-            CurrentWeather = "CLEAR"
-        elseif extracted == "few" or extracted == "sct" or extracted == "bkn" or extracted == "wind_few" or extracted == "wind_sct" or extracted == "wind_bkn" then
-            CurrentWeather = "CLOUDS"
-        elseif extracted == "ovc" or extracted == "wind_ovc" then
-            CurrentWeather = "OVERCAST"
-        elseif extracted == "snow" or extracted == "snow_sleet" or extracted == "snow_fzra" or extracted == "cold" then
-            CurrentWeather = "SNOW"
-        elseif extracted == "sleet" or extracted == "rain_snow" or extracted == "rain_sleet" then
-            CurrentWeather = "SNOWLIGHT"
-        elseif extracted == "fzra" or extracted == "rain_fzra" or extracted == "rain" or extracted == "rain_showers" or extracted == "rain_showers_hi" then
-            CurrentWeather = "RAIN"
-        elseif extracted == "tsra" or extracted == "tsra_sct" or extracted == "tsra_hi" or extracted == "tornado" or extracted == "hurricane" or extracted == "tropical_storm" then
-            CurrentWeather = "THUNDER"
-        elseif extracted == "haze" then
-            CurrentWeather = "SMOG"
-        elseif extracted == "hot" then
-            CurrentWeather = "EXTRASUNNY"
-        elseif extracted == "blizzard" then
-            CurrentWeather = "BLIZZARD"
-        elseif extracted == "fog" then
-            CurrentWeather = "FOGGY"
-        end
+        prom:next(function(wWeather)
+            local extracted
+            if string.match(wWeather,"night") then
+                extracted = string.match(string.match(wWeather, "(.*)?"), "night/(.*)")
+            elseif string.match(wWeather,"day") then
+                extracted = string.match(string.match(wWeather, "(.*)?"), "day/(.*)")
+            end
+    
+            if extracted == "skc" or extracted == "wind_skc" then
+                CurrentWeather = "CLEAR"
+            elseif extracted == "few" or extracted == "sct" or extracted == "bkn" or extracted == "wind_few" or extracted == "wind_sct" or extracted == "wind_bkn" then
+                CurrentWeather = "CLOUDS"
+            elseif extracted == "ovc" or extracted == "wind_ovc" then
+                CurrentWeather = "OVERCAST"
+            elseif extracted == "snow" or extracted == "snow_sleet" or extracted == "snow_fzra" or extracted == "cold" then
+                CurrentWeather = "SNOW"
+            elseif extracted == "sleet" or extracted == "rain_snow" or extracted == "rain_sleet" then
+                CurrentWeather = "SNOWLIGHT"
+            elseif extracted == "fzra" or extracted == "rain_fzra" or extracted == "rain" or extracted == "rain_showers" or extracted == "rain_showers_hi" then
+                CurrentWeather = "RAIN"
+            elseif extracted == "tsra" or extracted == "tsra_sct" or extracted == "tsra_hi" or extracted == "tornado" or extracted == "hurricane" or extracted == "tropical_storm" then
+                CurrentWeather = "THUNDER"
+            elseif extracted == "haze" then
+                CurrentWeather = "SMOG"
+            elseif extracted == "hot" then
+                CurrentWeather = "EXTRASUNNY"
+            elseif extracted == "blizzard" then
+                CurrentWeather = "BLIZZARD"
+            elseif extracted == "fog" then
+                CurrentWeather = "FOGGY"
+            end
+        end, function(error)
+            print("API Error: " .. error)
+        end)
     else
         if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY" then
             CurrentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
@@ -355,6 +360,8 @@ end)
 
 CreateThread(function()
     while true do
+        nextWeatherStage()
+
         newWeatherTimer = newWeatherTimer - 1
         Wait((1000 * 60) * Config.NewWeatherTimer)
         if newWeatherTimer == 0 then
