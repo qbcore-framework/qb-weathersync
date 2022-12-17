@@ -45,54 +45,56 @@ local function nextWeatherStage()
 
         local prom = promise.new()
         PerformHttpRequest(setupLink, function(err, rText)
-            if err and err ~= 200 then
-                print("Request Error: " .. err)
-            end
+            err = tonumber(err)
             
-            local temp = json.decode(rText)
-            PerformHttpRequest(temp["properties"]["forecastHourly"], function(err2, rText2)
-                if err2 and err2 ~= 200 then
-                    prom:reject(err2)
-                else
-                    local temp2 = json.decode(rText2)
-                    prom:resolve(temp2["properties"]["periods"][1]["icon"])
-                end
-            end, "GET", "", {["Content-Type"] = "application/json"})
+            if err and err ~= 200 then
+                prom:reject(err)
+            else
+                local temp = json.decode(rText)
+                PerformHttpRequest(temp["properties"]["forecastHourly"], function(err2, rText2)
+                    if err2 and err2 ~= 200 then
+                        prom:reject(err2)
+                    else
+                        local temp2 = json.decode(rText2)
+                        prom:resolve(temp2["properties"]["periods"][1]["icon"])
+                    end
+                end, "GET", "", {["Content-Type"] = "application/json"})
+            end
         end, "GET", "", {["Content-Type"] = "application/json"})
 
-        prom:next(function(wWeather)
-            local extracted
-            if string.match(wWeather,"night") then
-                extracted = string.match(string.match(wWeather, "(.*)?"), "night/(.*)")
-            elseif string.match(wWeather,"day") then
-                extracted = string.match(string.match(wWeather, "(.*)?"), "day/(.*)")
+        prom:next(function(weatherStr)
+            local formattedWeatherStr
+            if string.match(weatherStr, "night") then
+                formattedWeatherStr = string.match(string.match(weatherStr, "(.*)?"), "night/(.*)")
+            elseif string.match(weatherStr, "day") then
+                formattedWeatherStr = string.match(string.match(weatherStr, "(.*)?"), "day/(.*)")
             end
     
-            if extracted == "skc" or extracted == "wind_skc" then
+            if formattedWeatherStr == "skc" or formattedWeatherStr == "wind_skc" then
                 CurrentWeather = "CLEAR"
-            elseif extracted == "few" or extracted == "sct" or extracted == "bkn" or extracted == "wind_few" or extracted == "wind_sct" or extracted == "wind_bkn" then
+            elseif formattedWeatherStr == "few" or formattedWeatherStr == "sct" or formattedWeatherStr == "bkn" or formattedWeatherStr == "wind_few" or formattedWeatherStr == "wind_sct" or formattedWeatherStr == "wind_bkn" then
                 CurrentWeather = "CLOUDS"
-            elseif extracted == "ovc" or extracted == "wind_ovc" then
+            elseif formattedWeatherStr == "ovc" or formattedWeatherStr == "wind_ovc" then
                 CurrentWeather = "OVERCAST"
-            elseif extracted == "snow" or extracted == "snow_sleet" or extracted == "snow_fzra" or extracted == "cold" then
+            elseif formattedWeatherStr == "snow" or formattedWeatherStr == "snow_sleet" or formattedWeatherStr == "snow_fzra" or formattedWeatherStr == "cold" then
                 CurrentWeather = "SNOW"
-            elseif extracted == "sleet" or extracted == "rain_snow" or extracted == "rain_sleet" then
+            elseif formattedWeatherStr == "sleet" or formattedWeatherStr == "rain_snow" or formattedWeatherStr == "rain_sleet" then
                 CurrentWeather = "SNOWLIGHT"
-            elseif extracted == "fzra" or extracted == "rain_fzra" or extracted == "rain" or extracted == "rain_showers" or extracted == "rain_showers_hi" then
+            elseif formattedWeatherStr == "fzra" or formattedWeatherStr == "rain_fzra" or formattedWeatherStr == "rain" or formattedWeatherStr == "rain_showers" or formattedWeatherStr == "rain_showers_hi" then
                 CurrentWeather = "RAIN"
-            elseif extracted == "tsra" or extracted == "tsra_sct" or extracted == "tsra_hi" or extracted == "tornado" or extracted == "hurricane" or extracted == "tropical_storm" then
+            elseif formattedWeatherStr == "tsra" or formattedWeatherStr == "tsra_sct" or formattedWeatherStr == "tsra_hi" or formattedWeatherStr == "tornado" or formattedWeatherStr == "hurricane" or formattedWeatherStr == "tropical_storm" then
                 CurrentWeather = "THUNDER"
-            elseif extracted == "haze" then
+            elseif formattedWeatherStr == "haze" then
                 CurrentWeather = "SMOG"
-            elseif extracted == "hot" then
+            elseif formattedWeatherStr == "hot" then
                 CurrentWeather = "EXTRASUNNY"
-            elseif extracted == "blizzard" then
+            elseif formattedWeatherStr == "blizzard" then
                 CurrentWeather = "BLIZZARD"
-            elseif extracted == "fog" then
+            elseif formattedWeatherStr == "fog" then
                 CurrentWeather = "FOGGY"
             end
         end, function(error)
-            print("API Error: " .. error)
+            print("API / Request Error: " .. error)
         end)
     else
         if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY" then

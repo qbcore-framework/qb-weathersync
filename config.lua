@@ -12,9 +12,9 @@ Config.NewWeatherTimer  = 30 -- Time (in minutes) between each weather change   
 Config.Disabled         = false -- Set weather disabled                         default: false
 
 -- ONLY USA POSITIONS
-Config.UseRealWeather   = true
-Config.Latitude         = 37.6000
-Config.Longitude        = -95.6650
+Config.UseRealWeather   = false
+Config.Latitude         = 0.0
+Config.Longitude        = 0.0
 
 Config.AvailableWeatherTypes = { -- DON'T TOUCH EXCEPT IF YOU KNOW WHAT YOU ARE DOING
     'EXTRASUNNY',
