@@ -85,7 +85,7 @@ CreateThread(function()
     local second = 0        --Add seconds for shadow smoothness
     while true do
         if not disable then
-            Wait(0)
+            Wait(500)
             local newBaseTime = baseTime
             if GetGameTimer() - 22  > timer then    --Generate seconds in client side to avoid communiation
                 second = second + 1                 --Minutes are sent from the server every 2 seconds to keep sync
