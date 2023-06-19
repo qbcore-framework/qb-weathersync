@@ -279,9 +279,31 @@ end, 'admin')
 -- THREAD LOOPS
 CreateThread(function()
     local previous = 0
+    local realTimeFromApi = nil
+    local failedCount = 0
+
     while true do
         Wait(0)
         local newBaseTime = os.time(os.date("!*t")) / 2 + 360 --Set the server time depending of OS time
+        if Config.RealTimeSync then
+            newBaseTime = os.time(os.date("!*t")) --Set the server time depending of OS time
+            if realTimeFromApi == nil then
+                retrieveTimeFromApi(function(unixTime)
+                    realTimeFromApi = unixTime -- Set the server time depending on real-time retrieved from API
+                end)
+            end
+            while realTimeFromApi == nil do
+                if failedCount > 10 then
+                    print("Failed to retrieve real time from API, falling back to local time")
+                    break
+                end
+                failedCount = failedCount + 1
+                Wait(100)
+            end
+            if realTimeFromApi ~= nil then
+                newBaseTime = realTimeFromApi
+            end
+        end
         if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
             previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
             if freezeTime then
