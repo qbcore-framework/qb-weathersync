@@ -120,6 +120,25 @@ local function setDynamicWeather(state)
     return Config.DynamicWeather
 end
 
+--- Retrieves the current time from worldtimeapi.org
+--- @return number - Unix time
+local function retrieveTimeFromApi(callback)
+    Citizen.CreateThread(function()
+        PerformHttpRequest("http://worldtimeapi.org/api/ip", function(statusCode, response)
+            if statusCode == 200 then
+                local data = json.decode(response)
+                if data == nil or data.unixtime == nil then
+                    callback(nil)
+                else
+                    callback(data.unixtime)
+                end
+            else
+                callback(nil)
+            end
+        end, "GET", nil, nil)
+    end)
+end
+
 -- EVENTS
 RegisterNetEvent('qb-weathersync:server:RequestStateSync', function()
     TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, CurrentWeather, blackout)
