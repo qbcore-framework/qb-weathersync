@@ -267,10 +267,11 @@ end, 'admin')
 CreateThread(function()
     local previous = 0
     while true do
-        Wait(0)
-        local newBaseTime = os.time(os.date("!*t")) / 2 + 360 --Set the server time depending of OS time
-        if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
-            previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
+        Wait(1000) -- Wait for 1 second (1000 milliseconds)
+        local currentSeconds = os.date("%S")
+        if currentSeconds ~= previous then -- Check if a new second has started
+            previous = currentSeconds
+            local newBaseTime = os.time() / 2 + 180 -- Set the server time depending on the current time
             if freezeTime then
                 timeOffset = timeOffset + baseTime - newBaseTime
             end
