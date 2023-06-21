@@ -1,0 +1,60 @@
+local Translations = {
+    weather = {
+        now_frozen = 'Vremea este acum înghețată.',
+        now_unfrozen = 'Vremea nu mai este înghețată.',
+        invalid_syntax = 'Sintaxă invalidă, sintaxa corectă este: /weather <tipul vremii>',
+        invalid_syntaxc = 'Sintaxă invalidă, folosește /weather <tipul vremii> în schimb!',
+        updated = 'Vremea a fost actualizată.',
+        invalid = 'Tipul de vreme este invalid, tipurile de vreme valide sunt: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN',
+        invalidc = 'Tipul de vreme este invalid, tipurile de vreme valide sunt: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN',
+        willchangeto = 'Vremea se va schimba în: %{value}.',
+        accessdenied = 'Accesul la comanda /weather a fost refuzat.',
+    },
+    dynamic_weather = {
+        disabled = 'Schimbările dinamice ale vremii sunt acum dezactivate.',
+        enabled = 'Schimbările dinamice ale vremii sunt acum activate.',
+    },
+    time = {
+        frozenc = 'Timpul este acum înghețat.',
+        unfrozenc = 'Timpul nu mai este înghețat.',
+        now_frozen = 'Timpul este acum înghețat.',
+        now_unfrozen = 'Timpul nu mai este înghețat.',
+        morning = 'Timpul a fost setat la dimineață.',
+        noon = 'Timpul a fost setat la amiază.',
+        evening = 'Timpul a fost setat la seară.',
+        night = 'Timpul a fost setat la noapte.',
+        change = 'Timpul a fost schimbat la %{value}:%{value2}.',
+        changec = 'Timpul a fost schimbat la: %{value}!',
+        invalid = 'Sintaxă invalidă, sintaxa corectă este: time <ora> <minut> !',
+        invalidc = 'Sintaxă invalidă. Folosește /time <ora> <minut> în schimb!',
+        access = 'Accesul la comanda /time a fost refuzat.',
+    },
+    blackout = {
+        enabled = 'Pana de curent este acum activată.',
+        enabledc = 'Pana de curent este acum activată.',
+        disabled = 'Pana de curent este acum dezactivată.',
+        disabledc = 'Pana de curent este acum dezactivată.',
+    },
+    help = {
+        weathercommand = 'Schimbă vremea.',
+        weathertype = 'tipul vremii',
+        availableweather = 'Tipuri disponibile: extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas & halloween',
+        timecommand = 'Schimbă timpul.',
+        timehname = 'ore',
+        timemname = 'minute',
+        timeh = 'Un număr între 0 - 23',
+        timem = 'Un număr între 0 - 59',
+        freezecommand = 'Îngheață / dezgheață timpul.',
+        freezeweathercommand = 'Activează/dezactivează schimbările dinamice ale vremii.',
+        morningcommand = 'Setează timpul la 09:00',
+        nooncommand = 'Setează timpul la 12:00',
+        eveningcommand = 'Setează timpul la 18:00',
+        nightcommand = 'Setează timpul la 23:00',
+        blackoutcommand = 'Activează/dezactivează modul pană de curent.',
+    },
+}
+
+Lang = Lang or Locale:new({
+    phrases = Translations,
+    warnOnMissing = true
+})
