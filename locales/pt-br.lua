@@ -1,0 +1,60 @@
+local Translations = {
+    weather = {
+        now_frozen = 'O clima está congelado agora.',
+        now_unfrozen = 'O clima não está mais congelado.',
+        invalid_syntax = 'Sintaxe inválida, a sintaxe correta é: /clima <tipodeclima>',
+        invalid_syntaxc = 'Sintaxe inválida, use /clima <tipodeclima> em vez disso!',
+        updated = 'O clima foi atualizado.',
+        invalid = 'Tipo de clima inválido, os tipos de clima válidos são: \nEXTRAENSOLARADO LIMPO NEUTRO SMOG NEVOEIRO NUBLADO CHUVOSO TEMPESTADE NEVE NEVASCA NEVANDO NATAL HALLOWEEN ',
+        invalidc = 'Tipo de clima inválido, os tipos de clima válidos são: \nEXTRAENSOLARADO LIMPO NEUTRO SMOG NEVOEIRO NUBLADO CHUVOSO TEMPESTADE NEVE NEVASCA NEVANDO NATAL HALLOWEEN ',
+        willchangeto = 'O clima mudará para: %{value}.',
+        accessdenied = 'Acesso negado para o comando /clima.',
+    },
+    dynamic_weather = {
+        disabled = 'As mudanças dinâmicas de clima estão desabilitadas agora.',
+        enabled = 'As mudanças dinâmicas de clima estão habilitadas agora.',
+    },
+    time = {
+        frozenc = 'O tempo está congelado agora.',
+        unfrozenc = 'O tempo não está mais congelado.',
+        now_frozen = 'O tempo está congelado agora.',
+        now_unfrozen = 'O tempo não está mais congelado.',
+        morning = 'O tempo foi definido para a manhã.',
+        noon = 'O tempo foi definido para o meio-dia.',
+        evening = 'O tempo foi definido para a tarde.',
+        night = 'O tempo foi definido para a noite.',
+        change = 'O tempo mudou para %{value}:%{value2}.',
+        changec = 'O tempo foi alterado para: %{value}!',
+        invalid = 'Sintaxe inválida, a sintaxe correta é: time <hora> <minuto> !',
+        invalidc = 'Sintaxe inválida. Use /time <hora> <minuto> em vez disso!',
+        access = 'Acesso negado para o comando /time.',
+    },
+    blackout = {
+        enabled = 'O modo de apagão está habilitado agora.',
+        enabledc = 'O modo de apagão está habilitado agora.',
+        disabled = 'O modo de apagão está desabilitado agora.',
+        disabledc = 'O modo de apagão está desabilitado agora.',
+    },
+    help = {
+        weathercommand = 'Mude o clima.',
+        weathertype = 'tipodeclima',
+        availableweather = 'Tipos disponíveis: extraensolarado, limpo, neutro, smog, nevoeiro, nublado, chuvoso, tempestade, neve, nevasca, nevando, natal e halloween',
+        timecommand = 'Mude o tempo.',
+        timehname = 'horas',
+        timemname = 'minutos',
+        timeh = 'Um número entre 0 - 23',
+        timem = 'Um número entre 0 - 59',
+        freezecommand = 'Congele / descongele o tempo.',
+        freezeweathercommand = 'Ative/desative as mudanças dinâmicas de clima.',
+        morningcommand = 'Defina o tempo para 09:00',
+        nooncommand = 'Defina o tempo para 12:00',
+        eveningcommand = 'Defina o tempo para 18:00',
+        nightcommand = 'Defina o tempo para 23:00',
+        blackoutcommand = 'Alternar o modo de apagão.',
+    },
+}
+
+Lang = Lang or Locale:new({
+    phrases = Translations,
+    warnOnMissing = true
+})
