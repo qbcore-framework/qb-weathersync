@@ -10,20 +10,14 @@ local newWeatherTimer = Config.NewWeatherTimer
 --- @param src string | number - source to check
 --- @return int - source
 local function getSource(src)
-    if src == '' then
-        return 0
-    end
-    return src
+    return src == '' and 0 or src
 end
 
 --- Does source have permissions to run admin commands
 --- @param src number - Source to check
 --- @return boolean - has permission
 local function isAllowedToChange(src)
-    if src == 0 or QBCore.Functions.HasPermission(src, "admin") or IsPlayerAceAllowed(src, 'command') then
-        return true
-    end
-    return false
+    return src == 0 or QBCore.Functions.HasPermission(src, "admin") or IsPlayerAceAllowed(src, 'command') 
 end
 
 --- Sets time offset based on minutes provided
