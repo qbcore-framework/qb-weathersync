@@ -1,7 +1,8 @@
 fx_version 'cerulean'
 game 'gta5'
-
-description 'vSyncRevamped'
+lua54 'yes'
+author 'Kakarot'
+description 'Syncs the time & weather for all players on the server and allows editing by command'
 version '2.1.0'
 
 shared_scripts {
@@ -13,5 +14,3 @@ shared_scripts {
 
 server_script 'server/server.lua'
 client_script 'client/client.lua'
-
-lua54 'yes'
