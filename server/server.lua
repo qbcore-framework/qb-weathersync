@@ -17,7 +17,7 @@ end
 --- @param src number - Source to check
 --- @return boolean - has permission
 local function isAllowedToChange(src)
-    return src == 0 or QBCore.Functions.HasPermission(src, "admin") or IsPlayerAceAllowed(src, 'command') 
+    return src == 0 or QBCore.Functions.HasPermission(src, "admin") or IsPlayerAceAllowed(src, 'command')
 end
 
 --- Sets time offset based on minutes provided
