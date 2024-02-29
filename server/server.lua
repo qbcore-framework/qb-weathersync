@@ -17,7 +17,7 @@ end
 --- @param src number - Source to check
 --- @return boolean - has permission
 local function isAllowedToChange(src)
-    return src == 0 or QBCore.Functions.HasPermission(src, "admin") or IsPlayerAceAllowed(src, 'command') 
+    return src == 0 or QBCore.Functions.HasPermission(src, "admin") or IsPlayerAceAllowed(src, 'command')
 end
 
 --- Sets time offset based on minutes provided
@@ -118,6 +118,25 @@ local function setDynamicWeather(state)
     else Config.DynamicWeather = false end
     TriggerEvent('qb-weathersync:server:RequestStateSync')
     return Config.DynamicWeather
+end
+
+--- Retrieves the current time from worldtimeapi.org
+--- @return number - Unix time
+local function retrieveTimeFromApi(callback)
+    Citizen.CreateThread(function()
+        PerformHttpRequest("http://worldtimeapi.org/api/ip", function(statusCode, response)
+            if statusCode == 200 then
+                local data = json.decode(response)
+                if data == nil or data.unixtime == nil then
+                    callback(nil)
+                else
+                    callback(data.unixtime)
+                end
+            else
+                callback(nil)
+            end
+        end, "GET", nil, nil)
+    end)
 end
 
 -- EVENTS
@@ -260,9 +279,31 @@ end, 'admin')
 -- THREAD LOOPS
 CreateThread(function()
     local previous = 0
+    local realTimeFromApi = nil
+    local failedCount = 0
+
     while true do
         Wait(0)
         local newBaseTime = os.time(os.date("!*t")) / 2 + 360 --Set the server time depending of OS time
+        if Config.RealTimeSync then
+            newBaseTime = os.time(os.date("!*t")) --Set the server time depending of OS time
+            if realTimeFromApi == nil then
+                retrieveTimeFromApi(function(unixTime)
+                    realTimeFromApi = unixTime -- Set the server time depending on real-time retrieved from API
+                end)
+            end
+            while realTimeFromApi == nil do
+                if failedCount > 10 then
+                    print("Failed to retrieve real time from API, falling back to local time")
+                    break
+                end
+                failedCount = failedCount + 1
+                Wait(100)
+            end
+            if realTimeFromApi ~= nil then
+                newBaseTime = realTimeFromApi
+            end
+        end
         if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
             previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
             if freezeTime then
