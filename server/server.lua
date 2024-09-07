@@ -124,7 +124,7 @@ end
 --- @return number - Unix time
 local function retrieveTimeFromApi(callback)
     Citizen.CreateThread(function()
-        PerformHttpRequest("http://worldtimeapi.org/api/ip", function(statusCode, response)
+        PerformHttpRequest("https://worldtimeapi.org/api/ip", function(statusCode, response)
             if statusCode == 200 then
                 local data = json.decode(response)
                 if data == nil or data.unixtime == nil then
