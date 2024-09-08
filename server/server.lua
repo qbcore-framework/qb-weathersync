@@ -293,7 +293,7 @@ CreateThread(function()
                 end)
             end
             while realTimeFromApi == nil do
-                if failedCount > 20 then
+                if failedCount > 25 then
                     print("Failed to retrieve real time from API, falling back to local time")
                     break
                 end
