@@ -293,12 +293,12 @@ CreateThread(function()
                 end)
             end
             while realTimeFromApi == nil do
-                if failedCount > 15 then
+                if failedCount > 20 then
                     print("Failed to retrieve real time from API, falling back to local time")
                     break
                 end
                 failedCount = failedCount + 1
-                Wait(1000)
+                Wait(100)
             end
             if realTimeFromApi ~= nil then
                 newBaseTime = realTimeFromApi
