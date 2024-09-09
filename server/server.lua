@@ -124,7 +124,7 @@ end
 --- @return number - Unix time
 local function retrieveTimeFromApi(callback)
     Citizen.CreateThread(function()
-        PerformHttpRequest("http://worldtimeapi.org/api/ip", function(statusCode, response)
+        PerformHttpRequest("https://worldtimeapi.org/api/ip", function(statusCode, response)
             if statusCode == 200 then
                 local data = json.decode(response)
                 if data == nil or data.unixtime == nil then
@@ -293,12 +293,12 @@ CreateThread(function()
                 end)
             end
             while realTimeFromApi == nil do
-                if failedCount > 10 then
+                if failedCount > 60 then
                     print("Failed to retrieve real time from API, falling back to local time")
                     break
                 end
                 failedCount = failedCount + 1
-                Wait(100)
+                Wait(1000)
             end
             if realTimeFromApi ~= nil then
                 newBaseTime = realTimeFromApi
