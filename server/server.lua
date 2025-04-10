@@ -121,7 +121,6 @@ local function setDynamicWeather(state)
 end
 
 --- Retrieves the current time from api.timezonedb.com
---- @return number - Unix time
 local function retrieveTimeFromApi(callback)
     Citizen.CreateThread(function()
         local apiKey = "REPLACE_ME_TO_YOUR_API" -- 🔐 Replace with your actual key from your email
