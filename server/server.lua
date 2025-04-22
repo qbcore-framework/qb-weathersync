@@ -123,6 +123,8 @@ end
 --- Retrieves the current time from api.timezonedb.com
 local function retrieveTimeFromApi(callback)
     Citizen.CreateThread(function()
+        PerformHttpRequest("https://worldtimeapi.org/api/ip", function(statusCode, response)
+            if statusCode == 200 then
         local apiKey = "REPLACE_ME_TO_YOUR_API" -- 🔐 Replace with your actual key from your email
         local zone = "America/Los_Angeles" -- 🔐 Replace with your actual TimeZone, ex: America/Los_Angeles
         local url = "http://api.timezonedb.com/v2.1/get-time-zone?key=" .. apiKey .. "&format=json&by=zone&zone=" .. zone
@@ -287,6 +289,31 @@ CreateThread(function()
         Wait(60000) -- ⏱️ Sync server time every 1 minute with real time API. Falls back to OS time if failed.
         local newBaseTime = os.time(os.date("!*t")) / 2 + 360 --Set the server time depending of OS time
         if Config.RealTimeSync then
+            newBaseTime = os.time(os.date("!*t")) --Set the server time depending of OS time
+            if realTimeFromApi == nil then
+                retrieveTimeFromApi(function(unixTime)
+                    realTimeFromApi = unixTime -- Set the server time depending on real-time retrieved from API
+                end)
+            end
+            while realTimeFromApi == nil do
+                if failedCount > 60 then
+                    print("Failed to retrieve real time from API, falling back to local time")
+                    break
+                end
+                failedCount = failedCount + 1
+                Wait(1000)
+            end
+            if realTimeFromApi ~= nil then
+                newBaseTime = realTimeFromApi
+            end
+        end
+        if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
+            previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
+            if freezeTime then
+                timeOffset = timeOffset + baseTime - newBaseTime
+            end
+            baseTime = newBaseTime
+        end
             retrieveTimeFromApi(function(unixTime)
                 if unixTime then
                     baseTime = unixTime
@@ -296,7 +323,7 @@ CreateThread(function()
             end)
         else
             baseTime = os.time(os.date("!*t")) / 2 + 360
-        end        
+        end
     end
 end)
 
