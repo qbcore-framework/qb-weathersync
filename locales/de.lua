@@ -52,14 +52,13 @@ local Translations = {
         nightcommand = 'Uhrzeit auf 23:00 Uhr einstellen',
         blackoutcommand = 'Blackoutmodus ein- und ausschalten.',
     },
-    error = {
-        not_access = 'Du hast keinen Zugriff auf diesen Befehl.',
-        not_allowed = 'Du bist nicht berechtigt, diesen Befehl zu verwenden.',
-    }
 }
 
+if GetConvar('qb_locale', 'en') == 'de' then
     Lang = Locale:new({
         phrases = Translations,
-        warnOnMissing = true
+        warnOnMissing = true,
+        fallbackLang = Lang,
     })
+end
 

@@ -9,7 +9,7 @@ local Translations = {
         invalidc = 'Tipo di tempo non valido, tipi di tempo validi: \nEXTRASUNNY CLEAR NEUTRAL SMOG FOGGY OVERCAST CLOUDS CLEARING RAIN THUNDER SNOW BLIZZARD SNOWLIGHT XMAS HALLOWEEN ',
         willchangeto = 'Il tempo cambierà in: %{value}.',
         accessdenied = 'Accesso per il comando /weather rifiutato.',
-    },      
+    },
 
     dynamic_weather = {
         disabled = 'I cambiamenti climatici dinamici sono disabilitati.',
@@ -30,7 +30,7 @@ local Translations = {
         invalid = 'Sintassi non valida, la sintassi corretta è: time <ore> <minuti> !',
         invalidc = 'Sintassi non valida. Usa /time <ore> <minuti> invece!',
         access = 'Access for command /time denied.',
-    },    
+    },
     blackout = {
         enabled = 'Il blackout è ora abilitato.',
         enabledc = 'Il blackout è ora abilitato.',
@@ -54,14 +54,13 @@ local Translations = {
         nightcommand = 'Imposta l\'ora a  23:00',
         blackoutcommand = 'Attiva/disattiva la modalità blackout.',
     },
-    error = {
-        not_access = 'Non hai accesso a quel comando.',
-        not_allowed = 'Non ti è permesso usare questo comando.',
-    }
 }
 
+if GetConvar('qb_locale', 'en') == 'it' then
     Lang = Locale:new({
         phrases = Translations,
-        warnOnMissing = true
-    })    
+        warnOnMissing = true,
+        fallbackLang = Lang,
+    })
+end
 

@@ -52,13 +52,12 @@ local Translations = {
         nightcommand = 'Met le temps à 23:00',
         blackoutcommand = 'Active la coupure électrique',
     },
-    error = {
-        not_access = "Erreur : Vous n'avez pas accès à cette commande.",
-        not_allowed = "Erreur : Vous n'avez pas accès à cette commande.",
-    }
 }
 
+if GetConvar('qb_locale', 'en') == 'fr' then
     Lang = Locale:new({
         phrases = Translations,
-        warnOnMissing = true
+        warnOnMissing = true,
+        fallbackLang = Lang,
     })
+end

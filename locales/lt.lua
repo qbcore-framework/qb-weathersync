@@ -52,13 +52,12 @@ local Translations = {
         nightcommand = 'Laikas nustatytas ? 23:00',
         blackoutcommand = 'Užtemimo nustatymas.',
     },
-    error = {
-        not_access = 'J?s neturite leidimo šiai komandai.',
-        not_allowed = 'Jums neleidžiama naudoti šios komandos.',
-    }
 }
 
+if GetConvar('qb_locale', 'en') == 'lt' then
     Lang = Locale:new({
         phrases = Translations,
-        warnOnMissing = true
+        warnOnMissing = true,
+        fallbackLang = Lang,
     })
+end
