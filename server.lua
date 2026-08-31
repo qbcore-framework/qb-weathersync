@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject({ 'Commands' })
+local QBCore = exports['qb-core']:GetCoreObject({ 'Commands', 'Functions' })
 local CurrentWeather = Config.StartWeather
 local baseTime = Config.BaseTime
 local timeOffset = Config.TimeOffset
